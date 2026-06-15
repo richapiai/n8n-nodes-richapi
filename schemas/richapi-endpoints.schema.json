@@ -1,0 +1,456 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://richapi.com/schemas/richapi-endpoints.schema.json",
+  "title": "RichAPI Endpoint Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "source",
+    "base_url",
+    "auth",
+    "endpoints"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source": {
+      "type": "string",
+      "const": "api_endpoint_configs"
+    },
+    "base_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "auth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "header"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "api_key"
+        },
+        "header": {
+          "type": "string",
+          "const": "x-api-key"
+        }
+      }
+    },
+    "endpoints": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/endpoint"
+      }
+    }
+  },
+  "$defs": {
+    "jsonObject": {
+      "type": "object"
+    },
+    "schemaObject": {
+      "type": "object"
+    },
+    "parameter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "required",
+        "schema"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "schema": {
+          "$ref": "#/$defs/schemaObject"
+        },
+        "default": true,
+        "example": true
+      }
+    },
+    "asyncMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "required_polling": {
+          "type": "boolean"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "sync",
+            "polling",
+            "webhook",
+            "polling_or_webhook"
+          ]
+        },
+        "job_id_path": {
+          "type": "string"
+        },
+        "result_path": {
+          "type": "string"
+        },
+        "no_completion_metadata_reason": {
+          "type": "string"
+        }
+      }
+    },
+    "pollingMetadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "endpoint_name",
+        "job_id_path",
+        "status_path",
+        "terminal_statuses",
+        "success_statuses",
+        "failure_statuses"
+      ],
+      "properties": {
+        "endpoint_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "id_parameter": {
+          "type": "string"
+        },
+        "job_id_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result_path": {
+          "type": "string"
+        },
+        "terminal_statuses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "success_statuses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "failure_statuses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "interval_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "max_attempts": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "webhookMetadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "request_field",
+        "delivery_events"
+      ],
+      "properties": {
+        "request_field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "delivery_events": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "signature_header": {
+          "type": "string"
+        },
+        "signature_algorithm": {
+          "type": "string"
+        },
+        "example_delivery": true
+      }
+    },
+    "integrations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n8n",
+        "mcp",
+        "openapi"
+      ],
+      "properties": {
+        "n8n": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enabled"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "operation_name": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]*$"
+            }
+          }
+        },
+        "mcp": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enabled",
+            "tool_name"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "tool_name": {
+              "type": "string",
+              "pattern": "^richapi_[a-z][a-z0-9_]*$"
+            }
+          }
+        },
+        "openapi": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enabled"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "display_name",
+        "description",
+        "method",
+        "path",
+        "visibility",
+        "input_schema",
+        "output_schema",
+        "path_params",
+        "query_params",
+        "default_query",
+        "default_body",
+        "example_body",
+        "pricing",
+        "async",
+        "polling",
+        "webhook",
+        "integrations"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "display_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "doc_section": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE"
+          ]
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "visibility": {
+          "type": "string",
+          "const": "public"
+        },
+        "input_schema": {
+          "$ref": "#/$defs/schemaObject"
+        },
+        "output_schema": true,
+        "path_params": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/parameter"
+          }
+        },
+        "query_params": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/parameter"
+          }
+        },
+        "default_query": {
+          "$ref": "#/$defs/jsonObject"
+        },
+        "default_body": {
+          "$ref": "#/$defs/jsonObject"
+        },
+        "example_body": {
+          "$ref": "#/$defs/jsonObject"
+        },
+        "pricing": true,
+        "async": {
+          "$ref": "#/$defs/asyncMetadata"
+        },
+        "polling": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/pollingMetadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "webhook": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/webhookMetadata"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "integrations": {
+          "$ref": "#/$defs/integrations"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "schema_version": "1.0.0",
+      "generated_at": "2026-06-15T00:00:00Z",
+      "source": "api_endpoint_configs",
+      "base_url": "https://v3-api.texau.com/api/v1",
+      "auth": {
+        "type": "api_key",
+        "header": "x-api-key"
+      },
+      "endpoints": [
+        {
+          "name": "email_finder",
+          "display_name": "Email Finder",
+          "description": "Find a professional email address for a person.",
+          "category": "Email",
+          "doc_section": "email",
+          "method": "POST",
+          "path": "/email_finder",
+          "visibility": "public",
+          "input_schema": {
+            "type": "object",
+            "properties": {
+              "first_name": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "first_name"
+            ]
+          },
+          "output_schema": {},
+          "path_params": [],
+          "query_params": [],
+          "default_query": {},
+          "default_body": {},
+          "example_body": {
+            "first_name": "Ada"
+          },
+          "pricing": {},
+          "async": {
+            "enabled": false,
+            "required_polling": false,
+            "mode": "sync"
+          },
+          "polling": null,
+          "webhook": null,
+          "integrations": {
+            "n8n": {
+              "enabled": true,
+              "operation_name": "email_finder"
+            },
+            "mcp": {
+              "enabled": true,
+              "tool_name": "richapi_email_finder"
+            },
+            "openapi": {
+              "enabled": true
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

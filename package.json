@@ -1,0 +1,61 @@
+{
+  "name": "n8n-nodes-richapi",
+  "version": "0.1.0",
+  "description": "RichAPI community nodes for n8n.",
+  "license": "MIT",
+  "homepage": "https://github.com/richapi/n8n-nodes-richapi",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/richapi/n8n-nodes-richapi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/richapi/n8n-nodes-richapi/issues"
+  },
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "richapi",
+    "texau",
+    "automation",
+    "api"
+  ],
+  "author": {
+    "name": "RichAPI"
+  },
+  "files": [
+    "dist",
+    "manifest",
+    "schemas",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "scripts": {
+    "build": "tsc && node scripts/copy-assets.js",
+    "check:generated": "tsx scripts/check-generated-endpoints.ts",
+    "generate": "tsx scripts/generate-endpoints.ts",
+    "lint": "eslint .",
+    "prepack": "npm run generate && npm run check:generated && npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "@typescript-eslint/parser": "^7.16.0",
+    "eslint": "^8.57.0",
+    "n8n-workflow": "2.18.3",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/RichApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/RichApi/RichApi.node.js",
+      "dist/nodes/RichApiTrigger/RichApiTrigger.node.js"
+    ]
+  }
+}
