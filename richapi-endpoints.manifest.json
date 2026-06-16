@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-06-15T11:28:25Z",
+  "generated_at": "2026-06-16T10:42:28Z",
   "source": "api_endpoint_configs",
   "base_url": "https://v3-api.texau.com/api/v1",
   "auth": {
@@ -951,7 +951,7 @@
       "category": "Directory",
       "doc_section": "directory",
       "method": "POST",
-      "path": "/directory_yellowpages/{scraping_service_url}",
+      "path": "/directory_yellowpages",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -1011,15 +1011,7 @@
           "description": "Average rating (if available)"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -2282,7 +2274,7 @@
       "default_query": {},
       "default_body": {},
       "example_body": {
-        "company_name": "Acme Corp"
+        "company_name": "amazon"
       },
       "pricing": {
         "credits_per_call": 1
@@ -4023,7 +4015,7 @@
       "category": "Search",
       "doc_section": "search",
       "method": "POST",
-      "path": "/search_bing/{scraping_service_url}",
+      "path": "/search_bing",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -4068,15 +4060,7 @@
           "description": "Rank position (1-based)"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -4115,7 +4099,7 @@
       "category": "Search",
       "doc_section": "search",
       "method": "POST",
-      "path": "/search_google_trends/{scraping_service_url}",
+      "path": "/search_google_trends",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -4154,15 +4138,7 @@
           "description": "Top and rising related topics"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -4270,7 +4246,7 @@
       "category": "Social",
       "doc_section": "social",
       "method": "POST",
-      "path": "/slack_channel_members/{scraping_service_url}",
+      "path": "/slack_channel_members",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -4336,15 +4312,7 @@
           "description": "Whether the user is a workspace admin"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -5587,7 +5555,7 @@
       "category": "Web Scraping",
       "doc_section": "web-scraping",
       "method": "POST",
-      "path": "/web_emails/{scraping_service_url}",
+      "path": "/web_emails",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -5617,15 +5585,7 @@
           "description": "Number of pages actually crawled"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -5664,7 +5624,7 @@
       "category": "Web Scraping",
       "doc_section": "web-scraping",
       "method": "POST",
-      "path": "/web_json_ld/{scraping_service_url}",
+      "path": "/web_json_ld",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -5690,15 +5650,7 @@
           "description": "Schema.org type (e.g. Article, Product, Organization, BreadcrumbList)"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -5736,7 +5688,7 @@
       "category": "Web Scraping",
       "doc_section": "web-scraping",
       "method": "POST",
-      "path": "/web_meta_tags/{scraping_service_url}",
+      "path": "/web_meta_tags",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -5782,15 +5734,7 @@
           "description": "Canonical URL"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -5828,7 +5772,7 @@
       "category": "Web Scraping",
       "doc_section": "web-scraping",
       "method": "POST",
-      "path": "/web_pixels/{scraping_service_url}",
+      "path": "/web_pixels",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -5874,15 +5818,7 @@
           "description": "Whether TikTok Pixel was detected"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -5920,7 +5856,7 @@
       "category": "Web Scraping",
       "doc_section": "web-scraping",
       "method": "POST",
-      "path": "/web_scrape/{scraping_service_url}",
+      "path": "/web_scrape",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -5964,15 +5900,7 @@
           "description": "HTTP status code returned by the target page"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -6013,7 +5941,7 @@
       "category": "Web Scraping",
       "doc_section": "web-scraping",
       "method": "POST",
-      "path": "/web_sitemap/{scraping_service_url}",
+      "path": "/web_sitemap",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -6039,15 +5967,7 @@
           "description": "Total number of URLs found"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -6085,7 +6005,7 @@
       "category": "Web Scraping",
       "doc_section": "web-scraping",
       "method": "POST",
-      "path": "/web_social_links/{scraping_service_url}",
+      "path": "/web_social_links",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -6141,15 +6061,7 @@
           "description": "All detected social links as a flat list"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -6187,7 +6099,7 @@
       "category": "Web Scraping",
       "doc_section": "web-scraping",
       "method": "POST",
-      "path": "/web_tech_stack/{scraping_service_url}",
+      "path": "/web_tech_stack",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -6218,15 +6130,7 @@
           "description": "GTM intelligence signals (ad pixels, CRM tools, chat widgets, etc.)"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -6264,7 +6168,7 @@
       "category": "Web Scraping",
       "doc_section": "web-scraping",
       "method": "POST",
-      "path": "/website_intelligence/{scraping_service_url}",
+      "path": "/website_intelligence",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -6320,15 +6224,7 @@
           "description": "JSON-LD structured data objects"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -6366,7 +6262,7 @@
       "category": "YouTube",
       "doc_section": "youtube",
       "method": "POST",
-      "path": "/youtube_channel/{scraping_service_url}",
+      "path": "/youtube_channel",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -6422,15 +6318,7 @@
           "description": "External links listed on the channel"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -6468,7 +6356,7 @@
       "category": "YouTube",
       "doc_section": "youtube",
       "method": "POST",
-      "path": "/youtube_channel_videos/{scraping_service_url}",
+      "path": "/youtube_channel_videos",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -6523,15 +6411,7 @@
           "description": "Thumbnail URL"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -6569,7 +6449,7 @@
       "category": "YouTube",
       "doc_section": "youtube",
       "method": "POST",
-      "path": "/youtube_search/{scraping_service_url}",
+      "path": "/youtube_search",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -6624,15 +6504,7 @@
           "description": "Publication date"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
@@ -6670,7 +6542,7 @@
       "category": "YouTube",
       "doc_section": "youtube",
       "method": "POST",
-      "path": "/youtube_video/{scraping_service_url}",
+      "path": "/youtube_video",
       "visibility": "public",
       "input_schema": {
         "type": "object",
@@ -6746,15 +6618,7 @@
           "description": "Publication date"
         }
       ],
-      "path_params": [
-        {
-          "name": "scraping_service_url",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
+      "path_params": [],
       "query_params": [],
       "default_query": {},
       "default_body": {},
