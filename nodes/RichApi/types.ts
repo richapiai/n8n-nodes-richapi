@@ -14,6 +14,7 @@ export interface RichApiAsyncMetadata {
 	enabled: boolean;
 	required_polling?: boolean;
 	mode?: string;
+	no_completion_metadata_reason?: string;
 }
 
 export interface RichApiPollingMetadata {

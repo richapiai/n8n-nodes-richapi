@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-06-16T10:42:28Z",
+  "generated_at": "2026-06-16T12:49:19Z",
   "source": "api_endpoint_configs",
   "base_url": "https://v3-api.texau.com/api/v1",
   "auth": {
@@ -550,7 +550,7 @@
       "description": "Get full details of a specific LinkedIn ad including variants, impressions by country, and targeting.",
       "category": "Ads",
       "doc_section": "ads",
-      "method": "GET",
+      "method": "POST",
       "path": "/ad_details",
       "visibility": "public",
       "input_schema": {
@@ -629,7 +629,7 @@
       "description": "Search LinkedIn Ad Library for active ads by advertiser, keyword, or country.",
       "category": "Ads",
       "doc_section": "ads",
-      "method": "GET",
+      "method": "POST",
       "path": "/ad_search",
       "visibility": "public",
       "input_schema": {
@@ -1450,6 +1450,86 @@
         "mcp": {
           "enabled": true,
           "tool_name": "richapi_email_verifier"
+        },
+        "openapi": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "name": "v2_email_verifier",
+      "display_name": "Async Email Verifier",
+      "description": "Verify email deliverability and validity via multi-provider waterfall.",
+      "category": "Email",
+      "doc_section": "email",
+      "method": "POST",
+      "path": "/v2_email_verifier",
+      "visibility": "public",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address to verify"
+          }
+        }
+      },
+      "output_schema": [
+        {
+          "type": "string",
+          "field": "email",
+          "description": "The email address that was verified"
+        },
+        {
+          "type": "boolean",
+          "field": "valid",
+          "description": "Whether the email is deliverable"
+        },
+        {
+          "type": "string",
+          "field": "status",
+          "description": "Verification status: valid, invalid, risky, or unknown"
+        },
+        {
+          "type": "boolean",
+          "field": "disposable",
+          "description": "Whether the address uses a disposable email provider"
+        },
+        {
+          "type": "boolean",
+          "field": "mxFound",
+          "description": "Whether MX records were found for the domain"
+        }
+      ],
+      "path_params": [],
+      "query_params": [],
+      "default_query": {},
+      "default_body": {},
+      "example_body": {
+        "email": "john.doe@acme.com"
+      },
+      "pricing": {
+        "credits_per_call": 2
+      },
+      "async": {
+        "enabled": true,
+        "required_polling": false,
+        "mode": "sync",
+        "no_completion_metadata_reason": "async endpoint has no polling_config or webhook_config metadata"
+      },
+      "polling": null,
+      "webhook": null,
+      "integrations": {
+        "n8n": {
+          "enabled": true,
+          "operation_name": "v2_email_verifier"
+        },
+        "mcp": {
+          "enabled": true,
+          "tool_name": "richapi_v2_email_verifier"
         },
         "openapi": {
           "enabled": true
@@ -2306,7 +2386,7 @@
       "description": "Get full LinkedIn job details including description, workplace type, and employment type.",
       "category": "Enrichment",
       "doc_section": "enrichment",
-      "method": "GET",
+      "method": "POST",
       "path": "/linkedin_job_detail",
       "visibility": "public",
       "input_schema": {
@@ -2452,6 +2532,393 @@
         "mcp": {
           "enabled": true,
           "tool_name": "richapi_phone_finder"
+        },
+        "openapi": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "name": "v2_company_enricher",
+      "display_name": "Async Company Enricher",
+      "description": "Enrich a company record with size, industry, funding, tech stack and more via multi-provider waterfall.",
+      "category": "Enrichment",
+      "doc_section": "enrichment",
+      "method": "POST",
+      "path": "/v2_company_enricher",
+      "visibility": "public",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Company name (alternative to domain)"
+          },
+          "domain": {
+            "type": "string",
+            "description": "Company domain (preferred)"
+          },
+          "linkedin_url": {
+            "type": "string",
+            "description": "LinkedIn company page URL (alternative)"
+          }
+        }
+      },
+      "output_schema": [
+        {
+          "type": "string",
+          "field": "name",
+          "description": "Company name"
+        },
+        {
+          "type": "string",
+          "field": "domain",
+          "description": "Primary domain"
+        },
+        {
+          "type": "string",
+          "field": "industry",
+          "description": "Industry category"
+        },
+        {
+          "type": "integer",
+          "field": "employeeCount",
+          "description": "Approximate employee count"
+        },
+        {
+          "type": "string",
+          "field": "revenue",
+          "description": "Estimated annual revenue range"
+        },
+        {
+          "type": "integer",
+          "field": "founded",
+          "description": "Year founded"
+        },
+        {
+          "type": "string",
+          "field": "headquarters",
+          "description": "HQ location"
+        },
+        {
+          "type": "string",
+          "field": "linkedinUrl",
+          "description": "LinkedIn company page URL"
+        },
+        {
+          "type": "string",
+          "field": "twitterHandle",
+          "description": "Twitter / X handle"
+        },
+        {
+          "type": "array",
+          "field": "techStack",
+          "description": "Detected technologies"
+        },
+        {
+          "type": "object",
+          "field": "funding",
+          "description": "Funding info (totalRaised, lastRound, investors)"
+        }
+      ],
+      "path_params": [],
+      "query_params": [],
+      "default_query": {},
+      "default_body": {},
+      "example_body": {
+        "domain": "microsoft.com"
+      },
+      "pricing": {
+        "credits_per_call": 2
+      },
+      "async": {
+        "enabled": true,
+        "required_polling": false,
+        "mode": "sync",
+        "no_completion_metadata_reason": "async endpoint has no polling_config or webhook_config metadata"
+      },
+      "polling": null,
+      "webhook": null,
+      "integrations": {
+        "n8n": {
+          "enabled": true,
+          "operation_name": "v2_company_enricher"
+        },
+        "mcp": {
+          "enabled": true,
+          "tool_name": "richapi_v2_company_enricher"
+        },
+        "openapi": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "name": "v2_email_finder",
+      "display_name": "Async Email Finder",
+      "description": "Find a verified work email using name, domain, or LinkedIn URL. Tries multiple providers automatically.",
+      "category": "Enrichment",
+      "doc_section": "enrichment",
+      "method": "POST",
+      "path": "/v2_email_finder",
+      "visibility": "public",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Company domain (required if no linkedin_url)"
+          },
+          "company": {
+            "type": "string",
+            "description": "Company name (optional, improves accuracy)"
+          },
+          "last_name": {
+            "type": "string",
+            "description": "Last name (required if no linkedin_url)"
+          },
+          "first_name": {
+            "type": "string",
+            "description": "First name (required if no linkedin_url)"
+          },
+          "linkedin_url": {
+            "type": "string",
+            "description": "LinkedIn profile URL (alternative to name + domain)"
+          }
+        }
+      },
+      "output_schema": [
+        {
+          "type": "string",
+          "field": "email",
+          "description": "Found work email address"
+        },
+        {
+          "type": "string",
+          "field": "confidence",
+          "description": "Confidence level: high, medium, or low"
+        },
+        {
+          "type": "string",
+          "field": "provider",
+          "description": "Which provider returned this result (internal, not exposed by name)"
+        }
+      ],
+      "path_params": [],
+      "query_params": [],
+      "default_query": {},
+      "default_body": {},
+      "example_body": {
+        "domain": "acme.com",
+        "last_name": "Doe",
+        "first_name": "John"
+      },
+      "pricing": {
+        "credits_per_call": 5
+      },
+      "async": {
+        "enabled": true,
+        "required_polling": false,
+        "mode": "sync",
+        "no_completion_metadata_reason": "async endpoint has no polling_config or webhook_config metadata"
+      },
+      "polling": null,
+      "webhook": null,
+      "integrations": {
+        "n8n": {
+          "enabled": true,
+          "operation_name": "v2_email_finder"
+        },
+        "mcp": {
+          "enabled": true,
+          "tool_name": "richapi_v2_email_finder"
+        },
+        "openapi": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "name": "v2_person_enricher",
+      "display_name": "Async Person Enricher",
+      "description": "Enrich a person record with name, title, company, location and contact info via multi-provider waterfall.",
+      "category": "Enrichment",
+      "doc_section": "enrichment",
+      "method": "POST",
+      "path": "/v2_person_enricher",
+      "visibility": "public",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address (alternative to linkedin_url)"
+          },
+          "company": {
+            "type": "string",
+            "description": "Company name"
+          },
+          "last_name": {
+            "type": "string",
+            "description": "Last name"
+          },
+          "first_name": {
+            "type": "string",
+            "description": "First name (used with last_name + company)"
+          },
+          "linkedin_url": {
+            "type": "string",
+            "description": "LinkedIn profile URL (preferred)"
+          }
+        }
+      },
+      "output_schema": [
+        {
+          "type": "string",
+          "field": "firstName",
+          "description": "First name"
+        },
+        {
+          "type": "string",
+          "field": "lastName",
+          "description": "Last name"
+        },
+        {
+          "type": "string",
+          "field": "email",
+          "description": "Work email address"
+        },
+        {
+          "type": "string",
+          "field": "phone",
+          "description": "Phone number"
+        },
+        {
+          "type": "string",
+          "field": "title",
+          "description": "Current job title"
+        },
+        {
+          "type": "string",
+          "field": "company",
+          "description": "Current employer"
+        },
+        {
+          "type": "string",
+          "field": "location",
+          "description": "Location"
+        },
+        {
+          "type": "string",
+          "field": "linkedinUrl",
+          "description": "LinkedIn profile URL"
+        },
+        {
+          "type": "string",
+          "field": "twitterHandle",
+          "description": "Twitter / X handle"
+        }
+      ],
+      "path_params": [],
+      "query_params": [],
+      "default_query": {},
+      "default_body": {},
+      "example_body": {
+        "linkedin_url": "https://www.linkedin.com/in/satyanadella"
+      },
+      "pricing": {
+        "credits_per_call": 2
+      },
+      "async": {
+        "enabled": true,
+        "required_polling": false,
+        "mode": "sync",
+        "no_completion_metadata_reason": "async endpoint has no polling_config or webhook_config metadata"
+      },
+      "polling": null,
+      "webhook": null,
+      "integrations": {
+        "n8n": {
+          "enabled": true,
+          "operation_name": "v2_person_enricher"
+        },
+        "mcp": {
+          "enabled": true,
+          "tool_name": "richapi_v2_person_enricher"
+        },
+        "openapi": {
+          "enabled": true
+        }
+      }
+    },
+    {
+      "name": "v2_phone_finder",
+      "display_name": "Async Phone Finder",
+      "description": "Find a mobile phone number using a LinkedIn URL or name and company. Tries multiple providers automatically.",
+      "category": "Enrichment",
+      "doc_section": "enrichment",
+      "method": "POST",
+      "path": "/v2_phone_finder",
+      "visibility": "public",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Company domain (required if no linkedin_url)"
+          },
+          "last_name": {
+            "type": "string",
+            "description": "Last name (required if no linkedin_url)"
+          },
+          "first_name": {
+            "type": "string",
+            "description": "First name (required if no linkedin_url)"
+          },
+          "linkedin_url": {
+            "type": "string",
+            "description": "LinkedIn profile URL (preferred)"
+          }
+        }
+      },
+      "output_schema": [
+        {
+          "type": "string",
+          "field": "phone",
+          "description": "Found mobile phone number (E.164 format when available)"
+        },
+        {
+          "type": "string",
+          "field": "status",
+          "description": "Verification status (verified, unverified)"
+        }
+      ],
+      "path_params": [],
+      "query_params": [],
+      "default_query": {},
+      "default_body": {},
+      "example_body": {
+        "linkedin_url": "https://www.linkedin.com/in/satyanadella"
+      },
+      "pricing": {
+        "credits_per_call": 25
+      },
+      "async": {
+        "enabled": true,
+        "required_polling": false,
+        "mode": "sync",
+        "no_completion_metadata_reason": "async endpoint has no polling_config or webhook_config metadata"
+      },
+      "polling": null,
+      "webhook": null,
+      "integrations": {
+        "n8n": {
+          "enabled": true,
+          "operation_name": "v2_phone_finder"
+        },
+        "mcp": {
+          "enabled": true,
+          "tool_name": "richapi_v2_phone_finder"
         },
         "openapi": {
           "enabled": true
@@ -3167,7 +3634,7 @@
       "description": "Resolve a location name to a LinkedIn Geo ID for use with profile and lead search filters.",
       "category": "Search",
       "doc_section": "search",
-      "method": "GET",
+      "method": "POST",
       "path": "/geo_id_search",
       "visibility": "public",
       "input_schema": {
@@ -3389,7 +3856,7 @@
       "description": "Search for employees of a specific company using its LinkedIn URL.",
       "category": "Search",
       "doc_section": "search",
-      "method": "GET",
+      "method": "POST",
       "path": "/linkedin_company_employees_search",
       "visibility": "public",
       "input_schema": {

@@ -7,6 +7,26 @@ export interface RichApiAsyncEndpointMapEntry {
 }
 
 export const ASYNC_ENDPOINT_MAP: Record<string, RichApiAsyncEndpointMapEntry> = {
+  "v2_company_enricher": {
+    "polling": null,
+    "webhook": null
+  },
+  "v2_email_finder": {
+    "polling": null,
+    "webhook": null
+  },
+  "v2_email_verifier": {
+    "polling": null,
+    "webhook": null
+  },
+  "v2_person_enricher": {
+    "polling": null,
+    "webhook": null
+  },
+  "v2_phone_finder": {
+    "polling": null,
+    "webhook": null
+  },
   "email_finding": {
     "polling": null,
     "webhook": {
