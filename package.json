@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-richapi",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "RichAPI community nodes for n8n.",
   "license": "MIT",
   "homepage": "https://github.com/richapi/n8n-nodes-richapi",
