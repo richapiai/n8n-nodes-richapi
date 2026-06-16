@@ -41,7 +41,7 @@ Supported filters:
 - API slug.
 - Job ID.
 
-Signature verification can be disabled, required, or best effort. When enabled, the trigger verifies `X-TexAu-Signature` using HMAC SHA-256.
+Signature verification can be disabled, required, or best effort. When enabled, the trigger verifies `X-TexAu-Signature` using HMAC SHA-256..
 
 ## Development
 
