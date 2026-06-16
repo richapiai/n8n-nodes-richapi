@@ -22,6 +22,9 @@
   "author": {
     "name": "RichAPI"
   },
+  "engines": {
+    "node": ">=22"
+  },
   "files": [
     "dist",
     "manifest",
