@@ -11,6 +11,31 @@ export const ENDPOINT_OPTIONS: INodePropertyOptions[] = [
     "description": "AI: Enrich, classify, extract, or summarize text using OpenAI, Anthropic, Gemini, or Perplexity."
   },
   {
+    "name": "Async Company Enricher",
+    "value": "v2_company_enricher",
+    "description": "Enrichment: Enrich a company record with size, industry, funding, tech stack and more via multi-provider waterfall."
+  },
+  {
+    "name": "Async Email Finder",
+    "value": "v2_email_finder",
+    "description": "Enrichment: Find a verified work email using name, domain, or LinkedIn URL. Tries multiple providers automatically."
+  },
+  {
+    "name": "Async Email Verifier",
+    "value": "v2_email_verifier",
+    "description": "Email: Verify email deliverability and validity via multi-provider waterfall."
+  },
+  {
+    "name": "Async Person Enricher",
+    "value": "v2_person_enricher",
+    "description": "Enrichment: Enrich a person record with name, title, company, location and contact info via multi-provider waterfall."
+  },
+  {
+    "name": "Async Phone Finder",
+    "value": "v2_phone_finder",
+    "description": "Enrichment: Find a mobile phone number using a LinkedIn URL or name and company. Tries multiple providers automatically."
+  },
+  {
     "name": "Bing Search",
     "value": "search_bing",
     "description": "Search: Search Bing and get structured SERP results with titles, URLs, and descriptions."
@@ -515,19 +540,274 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Perplexity only — filter by recency: day, week, month, year"
   },
   {
-    "displayName": "Scraping Service Url",
-    "name": "path_search_bing_scraping_service_url",
+    "displayName": "Name",
+    "name": "body_v2_company_enricher_name",
     "type": "string",
     "displayOptions": {
       "show": {
         "endpoint": [
-          "search_bing"
+          "v2_company_enricher"
         ]
       }
     },
     "default": "",
+    "required": false,
+    "description": "Company name (alternative to domain)"
+  },
+  {
+    "displayName": "Domain",
+    "name": "body_v2_company_enricher_domain",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_company_enricher"
+        ]
+      }
+    },
+    "default": "microsoft.com",
+    "required": false,
+    "description": "Company domain (preferred)"
+  },
+  {
+    "displayName": "Linkedin Url",
+    "name": "body_v2_company_enricher_linkedin_url",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_company_enricher"
+        ]
+      }
+    },
+    "default": "",
+    "required": false,
+    "description": "LinkedIn company page URL (alternative)"
+  },
+  {
+    "displayName": "Domain",
+    "name": "body_v2_email_finder_domain",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_email_finder"
+        ]
+      }
+    },
+    "default": "acme.com",
+    "required": false,
+    "description": "Company domain (required if no linkedin_url)"
+  },
+  {
+    "displayName": "Company",
+    "name": "body_v2_email_finder_company",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_email_finder"
+        ]
+      }
+    },
+    "default": "",
+    "required": false,
+    "description": "Company name (optional, improves accuracy)"
+  },
+  {
+    "displayName": "Last Name",
+    "name": "body_v2_email_finder_last_name",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_email_finder"
+        ]
+      }
+    },
+    "default": "Doe",
+    "required": false,
+    "description": "Last name (required if no linkedin_url)"
+  },
+  {
+    "displayName": "First Name",
+    "name": "body_v2_email_finder_first_name",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_email_finder"
+        ]
+      }
+    },
+    "default": "John",
+    "required": false,
+    "description": "First name (required if no linkedin_url)"
+  },
+  {
+    "displayName": "Linkedin Url",
+    "name": "body_v2_email_finder_linkedin_url",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_email_finder"
+        ]
+      }
+    },
+    "default": "",
+    "required": false,
+    "description": "LinkedIn profile URL (alternative to name + domain)"
+  },
+  {
+    "displayName": "Email",
+    "name": "body_v2_email_verifier_email",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_email_verifier"
+        ]
+      }
+    },
+    "default": "john.doe@acme.com",
     "required": true,
-    "description": "Bing Search Scraping Service Url."
+    "description": "Email address to verify"
+  },
+  {
+    "displayName": "Email",
+    "name": "body_v2_person_enricher_email",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_person_enricher"
+        ]
+      }
+    },
+    "default": "",
+    "required": false,
+    "description": "Email address (alternative to linkedin_url)"
+  },
+  {
+    "displayName": "Company",
+    "name": "body_v2_person_enricher_company",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_person_enricher"
+        ]
+      }
+    },
+    "default": "",
+    "required": false,
+    "description": "Company name"
+  },
+  {
+    "displayName": "Last Name",
+    "name": "body_v2_person_enricher_last_name",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_person_enricher"
+        ]
+      }
+    },
+    "default": "",
+    "required": false,
+    "description": "Last name"
+  },
+  {
+    "displayName": "First Name",
+    "name": "body_v2_person_enricher_first_name",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_person_enricher"
+        ]
+      }
+    },
+    "default": "",
+    "required": false,
+    "description": "First name (used with last_name + company)"
+  },
+  {
+    "displayName": "Linkedin Url",
+    "name": "body_v2_person_enricher_linkedin_url",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_person_enricher"
+        ]
+      }
+    },
+    "default": "https://www.linkedin.com/in/satyanadella",
+    "required": false,
+    "description": "LinkedIn profile URL (preferred)"
+  },
+  {
+    "displayName": "Domain",
+    "name": "body_v2_phone_finder_domain",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_phone_finder"
+        ]
+      }
+    },
+    "default": "",
+    "required": false,
+    "description": "Company domain (required if no linkedin_url)"
+  },
+  {
+    "displayName": "Last Name",
+    "name": "body_v2_phone_finder_last_name",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_phone_finder"
+        ]
+      }
+    },
+    "default": "",
+    "required": false,
+    "description": "Last name (required if no linkedin_url)"
+  },
+  {
+    "displayName": "First Name",
+    "name": "body_v2_phone_finder_first_name",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_phone_finder"
+        ]
+      }
+    },
+    "default": "",
+    "required": false,
+    "description": "First name (required if no linkedin_url)"
+  },
+  {
+    "displayName": "Linkedin Url",
+    "name": "body_v2_phone_finder_linkedin_url",
+    "type": "string",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "v2_phone_finder"
+        ]
+      }
+    },
+    "default": "https://www.linkedin.com/in/satyanadella",
+    "required": false,
+    "description": "LinkedIn profile URL (preferred)"
   },
   {
     "displayName": "Query",
@@ -1065,7 +1345,7 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
         ]
       }
     },
-    "default": "Acme Corp",
+    "default": "amazon",
     "required": true,
     "description": "Name of the company"
   },
@@ -1340,21 +1620,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Maximum number of result pages to fetch (default 1, max 100)"
   },
   {
-    "displayName": "Scraping Service Url",
-    "name": "path_search_google_trends_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "search_google_trends"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "Google Trends Scraping Service Url."
-  },
-  {
     "displayName": "Geo",
     "name": "body_search_google_trends_geo",
     "type": "string",
@@ -1428,21 +1693,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "default": "",
     "required": true,
     "description": "Job ID returned by submit endpoint"
-  },
-  {
-    "displayName": "Scraping Service Url",
-    "name": "path_web_json_ld_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "web_json_ld"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "JSON-LD Extractor Scraping Service Url."
   },
   {
     "displayName": "Url",
@@ -2300,21 +2550,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Max results to return (max 100)"
   },
   {
-    "displayName": "Scraping Service Url",
-    "name": "path_web_meta_tags_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "web_meta_tags"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "Meta Tags Extractor Scraping Service Url."
-  },
-  {
     "displayName": "Url",
     "name": "body_web_meta_tags_url",
     "type": "string",
@@ -2720,21 +2955,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Domain of the website"
   },
   {
-    "displayName": "Scraping Service Url",
-    "name": "path_web_sitemap_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "web_sitemap"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "Sitemap Extractor Scraping Service Url."
-  },
-  {
     "displayName": "Url",
     "name": "body_web_sitemap_url",
     "type": "string",
@@ -2748,21 +2968,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "default": "https://stripe.com",
     "required": true,
     "description": "Website root URL or direct sitemap URL"
-  },
-  {
-    "displayName": "Scraping Service Url",
-    "name": "path_slack_channel_members_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "slack_channel_members"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "Slack Channel Members Scraping Service Url."
   },
   {
     "displayName": "Token",
@@ -2840,21 +3045,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Seconds to sleep (1-300, default 60)"
   },
   {
-    "displayName": "Scraping Service Url",
-    "name": "path_web_social_links_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "web_social_links"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "Social Links Finder Scraping Service Url."
-  },
-  {
     "displayName": "Url",
     "name": "body_web_social_links_url",
     "type": "string",
@@ -2868,21 +3058,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "default": "https://hubspot.com",
     "required": true,
     "description": "Website URL to scan for social links"
-  },
-  {
-    "displayName": "Scraping Service Url",
-    "name": "path_web_tech_stack_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "web_tech_stack"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "Tech Stack Detector Scraping Service Url."
   },
   {
     "displayName": "Url",
@@ -2900,21 +3075,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Website URL to analyze"
   },
   {
-    "displayName": "Scraping Service Url",
-    "name": "path_web_pixels_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "web_pixels"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "Tracking Pixel Detector Scraping Service Url."
-  },
-  {
     "displayName": "Url",
     "name": "body_web_pixels_url",
     "type": "string",
@@ -2928,21 +3088,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "default": "https://hubspot.com",
     "required": true,
     "description": "Website URL to scan for tracking pixels"
-  },
-  {
-    "displayName": "Scraping Service Url",
-    "name": "path_web_scrape_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "web_scrape"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "Web Scraper Scraping Service Url."
   },
   {
     "displayName": "Url",
@@ -2975,21 +3120,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Whether to use cached results (default true)"
   },
   {
-    "displayName": "Scraping Service Url",
-    "name": "path_web_emails_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "web_emails"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "Website Email Extractor Scraping Service Url."
-  },
-  {
     "displayName": "Url",
     "name": "body_web_emails_url",
     "type": "string",
@@ -3020,21 +3150,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Maximum number of pages to crawl (default 5)"
   },
   {
-    "displayName": "Scraping Service Url",
-    "name": "path_website_intelligence_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "website_intelligence"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "Website Intelligence Scraping Service Url."
-  },
-  {
     "displayName": "Url",
     "name": "body_website_intelligence_url",
     "type": "string",
@@ -3048,21 +3163,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "default": "https://hubspot.com",
     "required": true,
     "description": "Website URL to analyze"
-  },
-  {
-    "displayName": "Scraping Service Url",
-    "name": "path_directory_yellowpages_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "directory_yellowpages"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "Yellow Pages Search Scraping Service Url."
   },
   {
     "displayName": "Page",
@@ -3110,21 +3210,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "City, state, or ZIP code"
   },
   {
-    "displayName": "Scraping Service Url",
-    "name": "path_youtube_channel_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "youtube_channel"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "YouTube Channel Info Scraping Service Url."
-  },
-  {
     "displayName": "Url",
     "name": "body_youtube_channel_url",
     "type": "string",
@@ -3138,21 +3223,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "default": "https://www.youtube.com/@MrBeast",
     "required": true,
     "description": "YouTube channel URL (@handle, /c/, or /channel/ format)"
-  },
-  {
-    "displayName": "Scraping Service Url",
-    "name": "path_youtube_channel_videos_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "youtube_channel_videos"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "YouTube Channel Videos Scraping Service Url."
   },
   {
     "displayName": "Url",
@@ -3185,21 +3255,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Maximum number of videos to return (default 20)"
   },
   {
-    "displayName": "Scraping Service Url",
-    "name": "path_youtube_search_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "youtube_search"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "YouTube Search Scraping Service Url."
-  },
-  {
     "displayName": "Query",
     "name": "body_youtube_search_query",
     "type": "string",
@@ -3228,21 +3283,6 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "default": 0,
     "required": false,
     "description": "Maximum number of results (default 10, max 50)"
-  },
-  {
-    "displayName": "Scraping Service Url",
-    "name": "path_youtube_video_scraping_service_url",
-    "type": "string",
-    "displayOptions": {
-      "show": {
-        "endpoint": [
-          "youtube_video"
-        ]
-      }
-    },
-    "default": "",
-    "required": true,
-    "description": "YouTube Video Details Scraping Service Url."
   },
   {
     "displayName": "Url",
@@ -3426,12 +3466,507 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     ]
   },
   {
+    "name": "v2_company_enricher",
+    "displayName": "Async Company Enricher",
+    "description": "Enrich a company record with size, industry, funding, tech stack and more via multi-provider waterfall.",
+    "category": "Enrichment",
+    "method": "POST",
+    "path": "/v2_company_enricher",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Company name (alternative to domain)"
+        },
+        "domain": {
+          "type": "string",
+          "description": "Company domain (preferred)"
+        },
+        "linkedin_url": {
+          "type": "string",
+          "description": "LinkedIn company page URL (alternative)"
+        }
+      }
+    },
+    "outputSchema": [
+      {
+        "type": "string",
+        "field": "name",
+        "description": "Company name"
+      },
+      {
+        "type": "string",
+        "field": "domain",
+        "description": "Primary domain"
+      },
+      {
+        "type": "string",
+        "field": "industry",
+        "description": "Industry category"
+      },
+      {
+        "type": "integer",
+        "field": "employeeCount",
+        "description": "Approximate employee count"
+      },
+      {
+        "type": "string",
+        "field": "revenue",
+        "description": "Estimated annual revenue range"
+      },
+      {
+        "type": "integer",
+        "field": "founded",
+        "description": "Year founded"
+      },
+      {
+        "type": "string",
+        "field": "headquarters",
+        "description": "HQ location"
+      },
+      {
+        "type": "string",
+        "field": "linkedinUrl",
+        "description": "LinkedIn company page URL"
+      },
+      {
+        "type": "string",
+        "field": "twitterHandle",
+        "description": "Twitter / X handle"
+      },
+      {
+        "type": "array",
+        "field": "techStack",
+        "description": "Detected technologies"
+      },
+      {
+        "type": "object",
+        "field": "funding",
+        "description": "Funding info (totalRaised, lastRound, investors)"
+      }
+    ],
+    "pathParams": [],
+    "queryParams": [],
+    "defaultQuery": {},
+    "defaultBody": {},
+    "exampleBody": {
+      "domain": "microsoft.com"
+    },
+    "async": {
+      "enabled": true,
+      "required_polling": false,
+      "mode": "sync",
+      "no_completion_metadata_reason": "async endpoint has no polling_config or webhook_config metadata"
+    },
+    "polling": null,
+    "webhook": null,
+    "fields": [
+      {
+        "source": "body",
+        "name": "name",
+        "parameterName": "body_v2_company_enricher_name",
+        "required": false
+      },
+      {
+        "source": "body",
+        "name": "domain",
+        "parameterName": "body_v2_company_enricher_domain",
+        "required": false
+      },
+      {
+        "source": "body",
+        "name": "linkedin_url",
+        "parameterName": "body_v2_company_enricher_linkedin_url",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "v2_email_finder",
+    "displayName": "Async Email Finder",
+    "description": "Find a verified work email using name, domain, or LinkedIn URL. Tries multiple providers automatically.",
+    "category": "Enrichment",
+    "method": "POST",
+    "path": "/v2_email_finder",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Company domain (required if no linkedin_url)"
+        },
+        "company": {
+          "type": "string",
+          "description": "Company name (optional, improves accuracy)"
+        },
+        "last_name": {
+          "type": "string",
+          "description": "Last name (required if no linkedin_url)"
+        },
+        "first_name": {
+          "type": "string",
+          "description": "First name (required if no linkedin_url)"
+        },
+        "linkedin_url": {
+          "type": "string",
+          "description": "LinkedIn profile URL (alternative to name + domain)"
+        }
+      }
+    },
+    "outputSchema": [
+      {
+        "type": "string",
+        "field": "email",
+        "description": "Found work email address"
+      },
+      {
+        "type": "string",
+        "field": "confidence",
+        "description": "Confidence level: high, medium, or low"
+      },
+      {
+        "type": "string",
+        "field": "provider",
+        "description": "Which provider returned this result (internal, not exposed by name)"
+      }
+    ],
+    "pathParams": [],
+    "queryParams": [],
+    "defaultQuery": {},
+    "defaultBody": {},
+    "exampleBody": {
+      "domain": "acme.com",
+      "last_name": "Doe",
+      "first_name": "John"
+    },
+    "async": {
+      "enabled": true,
+      "required_polling": false,
+      "mode": "sync",
+      "no_completion_metadata_reason": "async endpoint has no polling_config or webhook_config metadata"
+    },
+    "polling": null,
+    "webhook": null,
+    "fields": [
+      {
+        "source": "body",
+        "name": "domain",
+        "parameterName": "body_v2_email_finder_domain",
+        "required": false
+      },
+      {
+        "source": "body",
+        "name": "company",
+        "parameterName": "body_v2_email_finder_company",
+        "required": false
+      },
+      {
+        "source": "body",
+        "name": "last_name",
+        "parameterName": "body_v2_email_finder_last_name",
+        "required": false
+      },
+      {
+        "source": "body",
+        "name": "first_name",
+        "parameterName": "body_v2_email_finder_first_name",
+        "required": false
+      },
+      {
+        "source": "body",
+        "name": "linkedin_url",
+        "parameterName": "body_v2_email_finder_linkedin_url",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "v2_email_verifier",
+    "displayName": "Async Email Verifier",
+    "description": "Verify email deliverability and validity via multi-provider waterfall.",
+    "category": "Email",
+    "method": "POST",
+    "path": "/v2_email_verifier",
+    "inputSchema": {
+      "type": "object",
+      "required": [
+        "email"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email address to verify"
+        }
+      }
+    },
+    "outputSchema": [
+      {
+        "type": "string",
+        "field": "email",
+        "description": "The email address that was verified"
+      },
+      {
+        "type": "boolean",
+        "field": "valid",
+        "description": "Whether the email is deliverable"
+      },
+      {
+        "type": "string",
+        "field": "status",
+        "description": "Verification status: valid, invalid, risky, or unknown"
+      },
+      {
+        "type": "boolean",
+        "field": "disposable",
+        "description": "Whether the address uses a disposable email provider"
+      },
+      {
+        "type": "boolean",
+        "field": "mxFound",
+        "description": "Whether MX records were found for the domain"
+      }
+    ],
+    "pathParams": [],
+    "queryParams": [],
+    "defaultQuery": {},
+    "defaultBody": {},
+    "exampleBody": {
+      "email": "john.doe@acme.com"
+    },
+    "async": {
+      "enabled": true,
+      "required_polling": false,
+      "mode": "sync",
+      "no_completion_metadata_reason": "async endpoint has no polling_config or webhook_config metadata"
+    },
+    "polling": null,
+    "webhook": null,
+    "fields": [
+      {
+        "source": "body",
+        "name": "email",
+        "parameterName": "body_v2_email_verifier_email",
+        "required": true
+      }
+    ]
+  },
+  {
+    "name": "v2_person_enricher",
+    "displayName": "Async Person Enricher",
+    "description": "Enrich a person record with name, title, company, location and contact info via multi-provider waterfall.",
+    "category": "Enrichment",
+    "method": "POST",
+    "path": "/v2_person_enricher",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "Email address (alternative to linkedin_url)"
+        },
+        "company": {
+          "type": "string",
+          "description": "Company name"
+        },
+        "last_name": {
+          "type": "string",
+          "description": "Last name"
+        },
+        "first_name": {
+          "type": "string",
+          "description": "First name (used with last_name + company)"
+        },
+        "linkedin_url": {
+          "type": "string",
+          "description": "LinkedIn profile URL (preferred)"
+        }
+      }
+    },
+    "outputSchema": [
+      {
+        "type": "string",
+        "field": "firstName",
+        "description": "First name"
+      },
+      {
+        "type": "string",
+        "field": "lastName",
+        "description": "Last name"
+      },
+      {
+        "type": "string",
+        "field": "email",
+        "description": "Work email address"
+      },
+      {
+        "type": "string",
+        "field": "phone",
+        "description": "Phone number"
+      },
+      {
+        "type": "string",
+        "field": "title",
+        "description": "Current job title"
+      },
+      {
+        "type": "string",
+        "field": "company",
+        "description": "Current employer"
+      },
+      {
+        "type": "string",
+        "field": "location",
+        "description": "Location"
+      },
+      {
+        "type": "string",
+        "field": "linkedinUrl",
+        "description": "LinkedIn profile URL"
+      },
+      {
+        "type": "string",
+        "field": "twitterHandle",
+        "description": "Twitter / X handle"
+      }
+    ],
+    "pathParams": [],
+    "queryParams": [],
+    "defaultQuery": {},
+    "defaultBody": {},
+    "exampleBody": {
+      "linkedin_url": "https://www.linkedin.com/in/satyanadella"
+    },
+    "async": {
+      "enabled": true,
+      "required_polling": false,
+      "mode": "sync",
+      "no_completion_metadata_reason": "async endpoint has no polling_config or webhook_config metadata"
+    },
+    "polling": null,
+    "webhook": null,
+    "fields": [
+      {
+        "source": "body",
+        "name": "email",
+        "parameterName": "body_v2_person_enricher_email",
+        "required": false
+      },
+      {
+        "source": "body",
+        "name": "company",
+        "parameterName": "body_v2_person_enricher_company",
+        "required": false
+      },
+      {
+        "source": "body",
+        "name": "last_name",
+        "parameterName": "body_v2_person_enricher_last_name",
+        "required": false
+      },
+      {
+        "source": "body",
+        "name": "first_name",
+        "parameterName": "body_v2_person_enricher_first_name",
+        "required": false
+      },
+      {
+        "source": "body",
+        "name": "linkedin_url",
+        "parameterName": "body_v2_person_enricher_linkedin_url",
+        "required": false
+      }
+    ]
+  },
+  {
+    "name": "v2_phone_finder",
+    "displayName": "Async Phone Finder",
+    "description": "Find a mobile phone number using a LinkedIn URL or name and company. Tries multiple providers automatically.",
+    "category": "Enrichment",
+    "method": "POST",
+    "path": "/v2_phone_finder",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Company domain (required if no linkedin_url)"
+        },
+        "last_name": {
+          "type": "string",
+          "description": "Last name (required if no linkedin_url)"
+        },
+        "first_name": {
+          "type": "string",
+          "description": "First name (required if no linkedin_url)"
+        },
+        "linkedin_url": {
+          "type": "string",
+          "description": "LinkedIn profile URL (preferred)"
+        }
+      }
+    },
+    "outputSchema": [
+      {
+        "type": "string",
+        "field": "phone",
+        "description": "Found mobile phone number (E.164 format when available)"
+      },
+      {
+        "type": "string",
+        "field": "status",
+        "description": "Verification status (verified, unverified)"
+      }
+    ],
+    "pathParams": [],
+    "queryParams": [],
+    "defaultQuery": {},
+    "defaultBody": {},
+    "exampleBody": {
+      "linkedin_url": "https://www.linkedin.com/in/satyanadella"
+    },
+    "async": {
+      "enabled": true,
+      "required_polling": false,
+      "mode": "sync",
+      "no_completion_metadata_reason": "async endpoint has no polling_config or webhook_config metadata"
+    },
+    "polling": null,
+    "webhook": null,
+    "fields": [
+      {
+        "source": "body",
+        "name": "domain",
+        "parameterName": "body_v2_phone_finder_domain",
+        "required": false
+      },
+      {
+        "source": "body",
+        "name": "last_name",
+        "parameterName": "body_v2_phone_finder_last_name",
+        "required": false
+      },
+      {
+        "source": "body",
+        "name": "first_name",
+        "parameterName": "body_v2_phone_finder_first_name",
+        "required": false
+      },
+      {
+        "source": "body",
+        "name": "linkedin_url",
+        "parameterName": "body_v2_phone_finder_linkedin_url",
+        "required": false
+      }
+    ]
+  },
+  {
     "name": "search_bing",
     "displayName": "Bing Search",
     "description": "Search Bing and get structured SERP results with titles, URLs, and descriptions.",
     "category": "Search",
     "method": "POST",
-    "path": "/search_bing/{scraping_service_url}",
+    "path": "/search_bing",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -3475,15 +4010,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "Rank position (1-based)"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -3499,12 +4026,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "polling": null,
     "webhook": null,
     "fields": [
-      {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_search_bing_scraping_service_url",
-        "required": true
-      },
       {
         "source": "body",
         "name": "query",
@@ -5041,7 +5562,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "defaultQuery": {},
     "defaultBody": {},
     "exampleBody": {
-      "company_name": "Acme Corp"
+      "company_name": "amazon"
     },
     "async": {
       "enabled": false,
@@ -5165,7 +5686,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "displayName": "Geo ID Search",
     "description": "Resolve a location name to a LinkedIn Geo ID for use with profile and lead search filters.",
     "category": "Search",
-    "method": "GET",
+    "method": "POST",
     "path": "/geo_id_search",
     "inputSchema": {
       "type": "object",
@@ -5709,7 +6230,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Get Google Trends data: interest over time, related queries, and rising queries for any keyword.",
     "category": "Search",
     "method": "POST",
-    "path": "/search_google_trends/{scraping_service_url}",
+    "path": "/search_google_trends",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -5747,15 +6268,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "Top and rising related topics"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -5771,12 +6284,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "polling": null,
     "webhook": null,
     "fields": [
-      {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_search_google_trends_scraping_service_url",
-        "required": true
-      },
       {
         "source": "body",
         "name": "geo",
@@ -5919,7 +6426,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Extract structured JSON-LD data (Schema.org) from any web page — products, articles, organizations.",
     "category": "Web Scraping",
     "method": "POST",
-    "path": "/web_json_ld/{scraping_service_url}",
+    "path": "/web_json_ld",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -5944,15 +6451,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "Schema.org type (e.g. Article, Product, Organization, BreadcrumbList)"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -5967,12 +6466,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "polling": null,
     "webhook": null,
     "fields": [
-      {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_web_json_ld_scraping_service_url",
-        "required": true
-      },
       {
         "source": "body",
         "name": "url",
@@ -6163,7 +6656,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "displayName": "LinkedIn Ad Details",
     "description": "Get full details of a specific LinkedIn ad including variants, impressions by country, and targeting.",
     "category": "Ads",
-    "method": "GET",
+    "method": "POST",
     "path": "/ad_details",
     "inputSchema": {
       "type": "object",
@@ -6232,7 +6725,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "displayName": "LinkedIn Ad Search",
     "description": "Search LinkedIn Ad Library for active ads by advertiser, keyword, or country.",
     "category": "Ads",
-    "method": "GET",
+    "method": "POST",
     "path": "/ad_search",
     "inputSchema": {
       "type": "object",
@@ -6375,7 +6868,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "displayName": "LinkedIn Company Employees Search",
     "description": "Search for employees of a specific company using its LinkedIn URL.",
     "category": "Search",
-    "method": "GET",
+    "method": "POST",
     "path": "/linkedin_company_employees_search",
     "inputSchema": {
       "type": "object",
@@ -6789,7 +7282,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "displayName": "LinkedIn Job Details",
     "description": "Get full LinkedIn job details including description, workplace type, and employment type.",
     "category": "Enrichment",
-    "method": "GET",
+    "method": "POST",
     "path": "/linkedin_job_detail",
     "inputSchema": {
       "type": "object",
@@ -7297,7 +7790,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Extract OpenGraph, Twitter Card, and SEO meta tags from any URL. Returns title, description, images, favicon.",
     "category": "Web Scraping",
     "method": "POST",
-    "path": "/web_meta_tags/{scraping_service_url}",
+    "path": "/web_meta_tags",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -7342,15 +7835,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "Canonical URL"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -7365,12 +7850,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "polling": null,
     "webhook": null,
     "fields": [
-      {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_web_meta_tags_scraping_service_url",
-        "required": true
-      },
       {
         "source": "body",
         "name": "url",
@@ -8670,7 +9149,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Extract all URLs from a website's sitemap (XML, robots.txt, or crawl discovery).",
     "category": "Web Scraping",
     "method": "POST",
-    "path": "/web_sitemap/{scraping_service_url}",
+    "path": "/web_sitemap",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -8695,15 +9174,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "Total number of URLs found"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -8719,12 +9190,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "webhook": null,
     "fields": [
       {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_web_sitemap_scraping_service_url",
-        "required": true
-      },
-      {
         "source": "body",
         "name": "url",
         "parameterName": "body_web_sitemap_url",
@@ -8738,7 +9203,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Extract Slack channel members with names, emails, titles, timezones, admin status. Requires your Slack cookie.",
     "category": "Social",
     "method": "POST",
-    "path": "/slack_channel_members/{scraping_service_url}",
+    "path": "/slack_channel_members",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -8803,15 +9268,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "Whether the user is a workspace admin"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -8829,12 +9286,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "polling": null,
     "webhook": null,
     "fields": [
-      {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_slack_channel_members_scraping_service_url",
-        "required": true
-      },
       {
         "source": "body",
         "name": "token",
@@ -8918,7 +9369,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Find all social media profile links (Facebook, Twitter, LinkedIn, Instagram, YouTube, TikTok, etc).",
     "category": "Web Scraping",
     "method": "POST",
-    "path": "/web_social_links/{scraping_service_url}",
+    "path": "/web_social_links",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -8973,15 +9424,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "All detected social links as a flat list"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -8997,12 +9440,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "webhook": null,
     "fields": [
       {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_web_social_links_scraping_service_url",
-        "required": true
-      },
-      {
         "source": "body",
         "name": "url",
         "parameterName": "body_web_social_links_url",
@@ -9016,7 +9453,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Detect 100+ technologies (CMS, analytics, CDN, frameworks, payments) + GTM intelligence signals.",
     "category": "Web Scraping",
     "method": "POST",
-    "path": "/web_tech_stack/{scraping_service_url}",
+    "path": "/web_tech_stack",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -9046,15 +9483,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "GTM intelligence signals (ad pixels, CRM tools, chat widgets, etc.)"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -9070,12 +9499,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "webhook": null,
     "fields": [
       {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_web_tech_stack_scraping_service_url",
-        "required": true
-      },
-      {
         "source": "body",
         "name": "url",
         "parameterName": "body_web_tech_stack_url",
@@ -9089,7 +9512,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Detect Google Tag Manager, GA4, Facebook Pixel, LinkedIn Insight, TikTok Pixel and more on any site.",
     "category": "Web Scraping",
     "method": "POST",
-    "path": "/web_pixels/{scraping_service_url}",
+    "path": "/web_pixels",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -9134,15 +9557,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "Whether TikTok Pixel was detected"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -9158,12 +9573,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "webhook": null,
     "fields": [
       {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_web_pixels_scraping_service_url",
-        "required": true
-      },
-      {
         "source": "body",
         "name": "url",
         "parameterName": "body_web_pixels_url",
@@ -9177,7 +9586,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Scrape full page HTML and markdown with anti-bot protection via Firecrawl.",
     "category": "Web Scraping",
     "method": "POST",
-    "path": "/web_scrape/{scraping_service_url}",
+    "path": "/web_scrape",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -9220,15 +9629,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "HTTP status code returned by the target page"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -9246,12 +9647,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "polling": null,
     "webhook": null,
     "fields": [
-      {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_web_scrape_scraping_service_url",
-        "required": true
-      },
       {
         "source": "body",
         "name": "url",
@@ -9272,7 +9667,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Extract email addresses by crawling multiple pages of a website.",
     "category": "Web Scraping",
     "method": "POST",
-    "path": "/web_emails/{scraping_service_url}",
+    "path": "/web_emails",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -9301,15 +9696,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "Number of pages actually crawled"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -9325,12 +9712,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "polling": null,
     "webhook": null,
     "fields": [
-      {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_web_emails_scraping_service_url",
-        "required": true
-      },
       {
         "source": "body",
         "name": "url",
@@ -9351,7 +9732,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Flagship: comprehensive website report — meta tags, tech stack, pixels, social links, emails, SSL, headers in one call.",
     "category": "Web Scraping",
     "method": "POST",
-    "path": "/website_intelligence/{scraping_service_url}",
+    "path": "/website_intelligence",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -9406,15 +9787,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "JSON-LD structured data objects"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -9430,12 +9803,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "webhook": null,
     "fields": [
       {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_website_intelligence_scraping_service_url",
-        "required": true
-      },
-      {
         "source": "body",
         "name": "url",
         "parameterName": "body_website_intelligence_url",
@@ -9449,7 +9816,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Search Yellow Pages for businesses with name, phone, address, website, and categories.",
     "category": "Directory",
     "method": "POST",
-    "path": "/directory_yellowpages/{scraping_service_url}",
+    "path": "/directory_yellowpages",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -9508,15 +9875,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "Average rating (if available)"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -9532,12 +9891,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "polling": null,
     "webhook": null,
     "fields": [
-      {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_directory_yellowpages_scraping_service_url",
-        "required": true
-      },
       {
         "source": "body",
         "name": "page",
@@ -9564,7 +9917,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Get channel info: name, subscriber count, description, avatar, banner, external links.",
     "category": "YouTube",
     "method": "POST",
-    "path": "/youtube_channel/{scraping_service_url}",
+    "path": "/youtube_channel",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -9619,15 +9972,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "External links listed on the channel"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -9643,12 +9988,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "webhook": null,
     "fields": [
       {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_youtube_channel_scraping_service_url",
-        "required": true
-      },
-      {
         "source": "body",
         "name": "url",
         "parameterName": "body_youtube_channel_url",
@@ -9662,7 +10001,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "List up to 50 most recent videos from a YouTube channel with titles, view counts, and durations per call.",
     "category": "YouTube",
     "method": "POST",
-    "path": "/youtube_channel_videos/{scraping_service_url}",
+    "path": "/youtube_channel_videos",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -9716,15 +10055,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "Thumbnail URL"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -9739,12 +10070,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "polling": null,
     "webhook": null,
     "fields": [
-      {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_youtube_channel_videos_scraping_service_url",
-        "required": true
-      },
       {
         "source": "body",
         "name": "url",
@@ -9765,7 +10090,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Search YouTube videos — returns up to 20 video IDs, titles, channels, view counts, and thumbnails per call.",
     "category": "YouTube",
     "method": "POST",
-    "path": "/youtube_search/{scraping_service_url}",
+    "path": "/youtube_search",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -9819,15 +10144,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "Publication date"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -9842,12 +10159,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "polling": null,
     "webhook": null,
     "fields": [
-      {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_youtube_search_scraping_service_url",
-        "required": true
-      },
       {
         "source": "body",
         "name": "query",
@@ -9868,7 +10179,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "description": "Get full video details: title, description, view/like counts, duration, tags, thumbnails, chapters.",
     "category": "YouTube",
     "method": "POST",
-    "path": "/youtube_video/{scraping_service_url}",
+    "path": "/youtube_video",
     "inputSchema": {
       "type": "object",
       "required": [
@@ -9943,15 +10254,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "description": "Publication date"
       }
     ],
-    "pathParams": [
-      {
-        "name": "scraping_service_url",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      }
-    ],
+    "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
     "defaultBody": {},
@@ -9967,12 +10270,6 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "webhook": null,
     "fields": [
       {
-        "source": "path",
-        "name": "scraping_service_url",
-        "parameterName": "path_youtube_video_scraping_service_url",
-        "required": true
-      },
-      {
         "source": "body",
         "name": "url",
         "parameterName": "body_youtube_video_url",
@@ -9984,6 +10281,11 @@ export const ENDPOINTS: RichApiEndpoint[] = [
 ;
 
 export const ASYNC_ENDPOINT_NAMES: string[] = [
+  "v2_company_enricher",
+  "v2_email_finder",
+  "v2_email_verifier",
+  "v2_person_enricher",
+  "v2_phone_finder",
   "email_finding",
   "email_verification"
 ]
