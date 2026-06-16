@@ -3,13 +3,13 @@
   "version": "0.1.1",
   "description": "RichAPI community nodes for n8n.",
   "license": "MIT",
-  "homepage": "https://github.com/richapi/n8n-nodes-richapi",
+  "homepage": "https://github.com/richapiai/n8n-nodes-richapi",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/richapi/n8n-nodes-richapi.git"
+    "url": "https://github.com/richapiai/n8n-nodes-richapi"
   },
   "bugs": {
-    "url": "https://github.com/richapi/n8n-nodes-richapi/issues"
+    "url": "https://github.com/richapiai/n8n-nodes-richapi/issues"
   },
   "keywords": [
     "n8n-community-node-package",
