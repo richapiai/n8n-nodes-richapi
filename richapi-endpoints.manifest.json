@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "generated_at": "2026-06-16T12:49:19Z",
   "source": "api_endpoint_configs",
-  "base_url": "https://v3-api.texau.com/api/v1",
+  "base_url": "https://api.richapi.ai/api/v1",
   "auth": {
     "type": "api_key",
     "header": "x-api-key"

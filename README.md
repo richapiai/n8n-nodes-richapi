@@ -1,6 +1,6 @@
 # n8n-nodes-richapi
 
-RichAPI community nodes for n8n. The package exposes a generated `RichAPI` action node for the public RichAPI endpoint manifest and a `RichAPI Trigger` node for webhook deliveries.
+RichAPI community node for n8n. The package exposes a generated `RichAPI` action node for the public RichAPI endpoint manifest.
 
 ## Installation
 
@@ -15,7 +15,7 @@ npm install n8n-nodes-richapi
 Create `RichAPI API` credentials with:
 
 - `API Key`: your RichAPI API key.
-- `Base URL`: defaults to `https://v3-api.texau.com/api/v1`.
+- `Base URL`: defaults to `https://api.richapi.ai/api/v1`.
 
 Requests send the key with the `x-api-key` header.
 
@@ -29,19 +29,7 @@ Async endpoints support:
 
 - `Return Job ID`: returns the initial RichAPI response immediately.
 - `Wait Until Complete`: polls when the manifest includes polling metadata.
-- `Deliver to Webhook`: sends a webhook URL in the request body when the endpoint supports request-level webhooks.
-
-## RichAPI Trigger
-
-Use `RichAPI Trigger` to receive RichAPI async job results or outbound webhook deliveries.
-
-Supported filters:
-
-- Event: any event, job completed, job failed, quota exceeded.
-- API slug.
-- Job ID.
-
-Signature verification can be disabled, required, or best effort. When enabled, the trigger verifies `X-TexAu-Signature` using HMAC SHA-256..
+- `Deliver to Webhook`: sends a webhook URL in the request body when the endpoint supports request-level webhooks. Use n8n's built-in `Webhook` node to receive the callback.
 
 ## Development
 

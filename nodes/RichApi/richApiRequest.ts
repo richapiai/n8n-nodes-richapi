@@ -61,7 +61,7 @@ async function callRichApiEndpoint(
 		timeout: (options.timeoutSeconds ?? 300) * 1000,
 	};
 
-	if (endpoint.method !== 'GET' && Object.keys(body).length > 0) {
+	if (Object.keys(body).length > 0) {
 		requestOptions.body = body;
 	}
 
@@ -76,7 +76,7 @@ async function callRichApiEndpoint(
 }
 
 function normalizeBaseUrl(value: unknown): string {
-	const baseUrl = String(value || 'https://v3-api.texau.com/api/v1').trim();
+	const baseUrl = String(value || 'https://api.richapi.ai/api/v1').trim();
 
 	return baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
 }
@@ -235,23 +235,49 @@ function readOptionalParameter(this: IExecuteFunctions, field: RichApiEndpointFi
 		return undefined;
 	}
 
+	if (field.schemaType === 'array' || field.schemaType === 'object') {
+		return parseJsonFieldValue.call(this, field, value, itemIndex);
+	}
+
 	return value;
 }
 
+function parseJsonFieldValue(
+	this: IExecuteFunctions,
+	field: RichApiEndpointField,
+	value: unknown,
+	itemIndex: number,
+): unknown {
+	const parsed = typeof value === 'string' ? parseRawJsonValue.call(this, value, itemIndex) : value;
+
+	if (!field.required && isEmptyJsonValue(parsed)) {
+		return undefined;
+	}
+
+	return parsed;
+}
+
 function parseRawJsonBody(this: IExecuteFunctions, rawJsonBody: string, itemIndex: number): IDataObject {
+	const parsed = parseRawJsonValue.call(this, rawJsonBody, itemIndex);
+
+	if (!isObjectRecord(parsed)) {
+		throw new NodeOperationError(this.getNode(), 'Raw JSON Body must be an object.', {
+			itemIndex,
+			description: 'Raw JSON Body could not be parsed.',
+		});
+	}
+
+	return parsed;
+}
+
+function parseRawJsonValue(this: IExecuteFunctions, rawJson: string, itemIndex: number): unknown {
 	try {
-		const parsed = JSON.parse(rawJsonBody) as unknown;
-
-		if (!isObjectRecord(parsed)) {
-			throw new Error('Raw JSON Body must be an object.');
-		}
-
-		return parsed;
+		return JSON.parse(rawJson) as unknown;
 	} catch (error) {
 		const message = error instanceof Error ? error.message : 'Invalid JSON.';
 		throw new NodeOperationError(this.getNode(), message, {
 			itemIndex,
-			description: 'Raw JSON Body could not be parsed.',
+			description: 'JSON field could not be parsed.',
 		});
 	}
 }
@@ -324,6 +350,13 @@ function getValueAtPath(value: unknown, path: string): unknown {
 
 function isObjectRecord(value: unknown): value is IDataObject {
 	return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function isEmptyJsonValue(value: unknown): boolean {
+	return (
+		(Array.isArray(value) && value.length === 0) ||
+		(isObjectRecord(value) && Object.keys(value).length === 0)
+	);
 }
 
 async function sleep(ms: number): Promise<void> {

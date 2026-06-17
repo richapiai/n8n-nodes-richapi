@@ -435,6 +435,21 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Prompt template; use {{fieldName}} placeholders for dynamic values"
   },
   {
+    "displayName": "Context",
+    "name": "body_ai_enrich_context",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "ai_enrich"
+        ]
+      }
+    },
+    "default": "{\n  \"text\": \"TexAu automates outreach.\"\n}",
+    "required": false,
+    "description": "Key-value pairs for template substitution in the prompt"
+  },
+  {
     "displayName": "Provider",
     "name": "body_ai_enrich_provider",
     "type": "string",
@@ -460,7 +475,7 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
         ]
       }
     },
-    "default": 0,
+    "default": 4096,
     "required": false,
     "description": "Maximum output tokens (default 4096)"
   },
@@ -495,6 +510,21 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Sampling temperature (0-1, default 0)"
   },
   {
+    "displayName": "Output Schema",
+    "name": "body_ai_enrich_output_schema",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "ai_enrich"
+        ]
+      }
+    },
+    "default": "{}",
+    "required": false,
+    "description": "JSON schema to guide structured output (when output_type is json)"
+  },
+  {
     "displayName": "System Prompt",
     "name": "body_ai_enrich_system_prompt",
     "type": "string",
@@ -523,6 +553,21 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "default": false,
     "required": false,
     "description": "Enable web search (supported by OpenAI, Anthropic, Gemini, Perplexity)"
+  },
+  {
+    "displayName": "Search Domain Filter",
+    "name": "body_ai_enrich_search_domain_filter",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "ai_enrich"
+        ]
+      }
+    },
+    "default": "[]",
+    "required": false,
+    "description": "Perplexity only — limit search to specific domains"
   },
   {
     "displayName": "Search Recency Filter",
@@ -840,6 +885,36 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Number of results to return (default 10, max 50)"
   },
   {
+    "displayName": "Urns",
+    "name": "body_enrich_companies_bulk_urns",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "enrich_companies_bulk"
+        ]
+      }
+    },
+    "default": "[\n  \"1586\",\n  \"1587\"\n]",
+    "required": true,
+    "description": "List of numeric LinkedIn company IDs (max 50)"
+  },
+  {
+    "displayName": "Urns",
+    "name": "body_enrich_profiles_bulk_urns",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "enrich_profiles_bulk"
+        ]
+      }
+    },
+    "default": "[\n  \"ACoAAAGhXV8B9jFBu7w3NLhsepBqpzJ1FdGgkuA\"\n]",
+    "required": true,
+    "description": "List of LinkedIn entity URNs (max 50)"
+  },
+  {
     "displayName": "Messy Url",
     "name": "body_clean_domain_messy_url",
     "type": "string",
@@ -1110,6 +1185,21 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "LinkedIn profile URL (alternative to name + domain)"
   },
   {
+    "displayName": "Data",
+    "name": "body_email_finding_data",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "email_finding"
+        ]
+      }
+    },
+    "default": "[\n  {\n    \"refId\": \"1\",\n    \"domain\": \"acme.com\",\n    \"lastname\": \"Doe\",\n    \"firstname\": \"John\"\n  }\n]",
+    "required": true,
+    "description": "List of people to find emails for"
+  },
+  {
     "displayName": "Webhook",
     "name": "body_email_finding_webhook",
     "type": "string",
@@ -1138,6 +1228,21 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "default": "",
     "required": true,
     "description": "Job ID returned by email_finding (passed as a path segment)"
+  },
+  {
+    "displayName": "Data",
+    "name": "body_email_verification_data",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "email_verification"
+        ]
+      }
+    },
+    "default": "[\n  {\n    \"email\": \"john@acme.com\",\n    \"refId\": \"1\"\n  }\n]",
+    "required": true,
+    "description": "List of emails to verify"
   },
   {
     "displayName": "Webhook",
@@ -1720,7 +1825,7 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
         ]
       }
     },
-    "default": 0,
+    "default": 1,
     "required": false,
     "description": "Page number (1-based)"
   },
@@ -1755,6 +1860,36 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Keyword filter across profile fields"
   },
   {
+    "displayName": "Function",
+    "name": "body_lead_search_function",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "lead_search"
+        ]
+      }
+    },
+    "default": "[]",
+    "required": false,
+    "description": "Job functions (e.g. ['Engineering', 'Marketing'])"
+  },
+  {
+    "displayName": "Industry",
+    "name": "body_lead_search_industry",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "lead_search"
+        ]
+      }
+    },
+    "default": "[]",
+    "required": false,
+    "description": "Industry names (e.g. ['Software', 'Finance'])"
+  },
+  {
     "displayName": "LastName",
     "name": "body_lead_search_lastName",
     "type": "string",
@@ -1768,6 +1903,21 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "default": "",
     "required": false,
     "description": "Last name filter"
+  },
+  {
+    "displayName": "Location",
+    "name": "body_lead_search_location",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "lead_search"
+        ]
+      }
+    },
+    "default": "[\n  \"United States\"\n]",
+    "required": false,
+    "description": "Location names (e.g. ['United States', 'London'])"
   },
   {
     "displayName": "FirstName",
@@ -1785,6 +1935,21 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "First name filter"
   },
   {
+    "displayName": "Seniority",
+    "name": "body_lead_search_seniority",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "lead_search"
+        ]
+      }
+    },
+    "default": "[\n  \"Senior\",\n  \"Director\"\n]",
+    "required": false,
+    "description": "Seniority levels (e.g. ['Senior', 'Director', 'VP'])"
+  },
+  {
     "displayName": "SessionId",
     "name": "body_lead_search_sessionId",
     "type": "string",
@@ -1800,6 +1965,21 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Session ID for consistent pagination across pages"
   },
   {
+    "displayName": "CompanySize",
+    "name": "body_lead_search_companySize",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "lead_search"
+        ]
+      }
+    },
+    "default": "[]",
+    "required": false,
+    "description": "Company size ranges (e.g. ['51-200', '201-500'])"
+  },
+  {
     "displayName": "SalesNavUrl",
     "name": "body_lead_search_salesNavUrl",
     "type": "string",
@@ -1813,6 +1993,21 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "default": "",
     "required": false,
     "description": "Full Sales Navigator search URL (alternative to individual filters)"
+  },
+  {
+    "displayName": "CurrentCompany",
+    "name": "body_lead_search_currentCompany",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "lead_search"
+        ]
+      }
+    },
+    "default": "[]",
+    "required": false,
+    "description": "Current company names or LinkedIn URLs"
   },
   {
     "displayName": "Url",
@@ -2685,6 +2880,36 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Results per page (default 10, max 100)"
   },
   {
+    "displayName": "Account",
+    "name": "body_people_search_account",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "people_search"
+        ]
+      }
+    },
+    "default": "{\n  \"industry\": [\n    \"software development\"\n  ],\n  \"employeeSize\": {\n    \"end\": 500,\n    \"start\": 50\n  }\n}",
+    "required": false,
+    "description": "Account/company filters."
+  },
+  {
+    "displayName": "Contact",
+    "name": "body_people_search_contact",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "people_search"
+        ]
+      }
+    },
+    "default": "{\n  \"jobTitle\": [\n    \"CTO\",\n    \"VP Engineering\"\n  ],\n  \"location\": [\n    \"united states\"\n  ]\n}",
+    "required": false,
+    "description": "Contact/person filters."
+  },
+  {
     "displayName": "Domain",
     "name": "body_phone_finder_domain",
     "type": "string",
@@ -3120,6 +3345,21 @@ export const ENDPOINT_PROPERTIES: INodeProperties[] = [
     "description": "Whether to use cached results (default true)"
   },
   {
+    "displayName": "Formats",
+    "name": "body_web_scrape_formats",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "endpoint": [
+          "web_scrape"
+        ]
+      }
+    },
+    "default": "[\n  \"markdown\"\n]",
+    "required": false,
+    "description": "Output formats: markdown, html, rawHtml, screenshot, links (default: [\"markdown\"])"
+  },
+  {
     "displayName": "Url",
     "name": "body_web_emails_url",
     "type": "string",
@@ -3392,7 +3632,9 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "pathParams": [],
     "queryParams": [],
     "defaultQuery": {},
-    "defaultBody": {},
+    "defaultBody": {
+      "max_tokens": 4096
+    },
     "exampleBody": {
       "prompt": "Summarise this: {{text}}",
       "context": {
@@ -3413,55 +3655,85 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "model",
         "parameterName": "body_ai_enrich_model",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "prompt",
         "parameterName": "body_ai_enrich_prompt",
-        "required": true
+        "required": true,
+        "schemaType": "string"
+      },
+      {
+        "source": "body",
+        "name": "context",
+        "parameterName": "body_ai_enrich_context",
+        "required": false,
+        "schemaType": "object"
       },
       {
         "source": "body",
         "name": "provider",
         "parameterName": "body_ai_enrich_provider",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "max_tokens",
         "parameterName": "body_ai_enrich_max_tokens",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "output_type",
         "parameterName": "body_ai_enrich_output_type",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "temperature",
         "parameterName": "body_ai_enrich_temperature",
-        "required": false
+        "required": false,
+        "schemaType": "number"
+      },
+      {
+        "source": "body",
+        "name": "output_schema",
+        "parameterName": "body_ai_enrich_output_schema",
+        "required": false,
+        "schemaType": "object"
       },
       {
         "source": "body",
         "name": "system_prompt",
         "parameterName": "body_ai_enrich_system_prompt",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "use_web_search",
         "parameterName": "body_ai_enrich_use_web_search",
-        "required": false
+        "required": false,
+        "schemaType": "boolean"
+      },
+      {
+        "source": "body",
+        "name": "search_domain_filter",
+        "parameterName": "body_ai_enrich_search_domain_filter",
+        "required": false,
+        "schemaType": "array"
       },
       {
         "source": "body",
         "name": "search_recency_filter",
         "parameterName": "body_ai_enrich_search_recency_filter",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -3566,19 +3838,22 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "name",
         "parameterName": "body_v2_company_enricher_name",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "domain",
         "parameterName": "body_v2_company_enricher_domain",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "linkedin_url",
         "parameterName": "body_v2_company_enricher_linkedin_url",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -3653,31 +3928,36 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "domain",
         "parameterName": "body_v2_email_finder_domain",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "company",
         "parameterName": "body_v2_email_finder_company",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "last_name",
         "parameterName": "body_v2_email_finder_last_name",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "first_name",
         "parameterName": "body_v2_email_finder_first_name",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "linkedin_url",
         "parameterName": "body_v2_email_finder_linkedin_url",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -3747,7 +4027,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "email",
         "parameterName": "body_v2_email_verifier_email",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -3850,31 +4131,36 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "email",
         "parameterName": "body_v2_person_enricher_email",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "company",
         "parameterName": "body_v2_person_enricher_company",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "last_name",
         "parameterName": "body_v2_person_enricher_last_name",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "first_name",
         "parameterName": "body_v2_person_enricher_first_name",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "linkedin_url",
         "parameterName": "body_v2_person_enricher_linkedin_url",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -3938,25 +4224,29 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "domain",
         "parameterName": "body_v2_phone_finder_domain",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "last_name",
         "parameterName": "body_v2_phone_finder_last_name",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "first_name",
         "parameterName": "body_v2_phone_finder_first_name",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "linkedin_url",
         "parameterName": "body_v2_phone_finder_linkedin_url",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -4030,13 +4320,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "query",
         "parameterName": "body_search_bing_query",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "num_results",
         "parameterName": "body_search_bing_num_results",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       }
     ]
   },
@@ -4085,7 +4377,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     },
     "polling": null,
     "webhook": null,
-    "fields": []
+    "fields": [
+      {
+        "source": "body",
+        "name": "urns",
+        "parameterName": "body_enrich_companies_bulk_urns",
+        "required": true,
+        "schemaType": "array"
+      }
+    ]
   },
   {
     "name": "enrich_profiles_bulk",
@@ -4131,7 +4431,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     },
     "polling": null,
     "webhook": null,
-    "fields": []
+    "fields": [
+      {
+        "source": "body",
+        "name": "urns",
+        "parameterName": "body_enrich_profiles_bulk_urns",
+        "required": true,
+        "schemaType": "array"
+      }
+    ]
   },
   {
     "name": "clean_domain",
@@ -4178,7 +4486,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "messy_url",
         "parameterName": "body_clean_domain_messy_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -4282,19 +4591,22 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "name",
         "parameterName": "body_company_enricher_name",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "domain",
         "parameterName": "body_company_enricher_domain",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "linkedin_url",
         "parameterName": "body_company_enricher_linkedin_url",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -4399,13 +4711,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_enrich_company_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "useCache",
         "parameterName": "body_enrich_company_useCache",
-        "required": false
+        "required": false,
+        "schemaType": "boolean"
       }
     ]
   },
@@ -4464,19 +4778,22 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "input",
         "parameterName": "body_count_occurrences_input",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "separator",
         "parameterName": "body_count_occurrences_separator",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "case_insensitive",
         "parameterName": "body_count_occurrences_case_insensitive",
-        "required": false
+        "required": false,
+        "schemaType": "boolean"
       }
     ]
   },
@@ -4575,7 +4892,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "domain",
         "parameterName": "body_crunchbase_company_scraper_sync_domain",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -4640,19 +4958,22 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "current_index",
         "parameterName": "body_distribute_leads_current_index",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "assignment_labels",
         "parameterName": "body_distribute_leads_assignment_labels",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "values_associated_with_labels",
         "parameterName": "body_distribute_leads_values_associated_with_labels",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -4726,31 +5047,36 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "domain",
         "parameterName": "body_email_finder_domain",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "company",
         "parameterName": "body_email_finder_company",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "last_name",
         "parameterName": "body_email_finder_last_name",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "first_name",
         "parameterName": "body_email_finder_first_name",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "linkedin_url",
         "parameterName": "body_email_finder_linkedin_url",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -4847,9 +5173,17 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "fields": [
       {
         "source": "body",
+        "name": "data",
+        "parameterName": "body_email_finding_data",
+        "required": true,
+        "schemaType": "array"
+      },
+      {
+        "source": "body",
         "name": "webhook",
         "parameterName": "body_email_finding_webhook",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -4901,7 +5235,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "jobId",
         "parameterName": "body_email_finding_inquiry_jobId",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -4988,9 +5323,17 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "fields": [
       {
         "source": "body",
+        "name": "data",
+        "parameterName": "body_email_verification_data",
+        "required": true,
+        "schemaType": "array"
+      },
+      {
+        "source": "body",
         "name": "webhook",
         "parameterName": "body_email_verification_webhook",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -5042,7 +5385,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "jobId",
         "parameterName": "body_email_verification_inquiry_jobId",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -5111,7 +5455,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "email",
         "parameterName": "body_email_verifier_email",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -5160,7 +5505,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "value",
         "parameterName": "body_encode_uri_value",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -5214,7 +5560,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "text",
         "parameterName": "body_extract_urls_emails_text",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -5268,7 +5615,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "email",
         "parameterName": "body_find_linkedin_url_by_email_email",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -5328,13 +5676,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "full_name",
         "parameterName": "body_find_linkedin_url_by_name_full_name",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "company_name",
         "parameterName": "body_find_linkedin_url_by_name_company_name",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -5388,7 +5738,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "linkedin_url",
         "parameterName": "body_find_personal_email_linkedin_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -5447,7 +5798,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "link",
         "parameterName": "body_find_redirect_link",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -5510,19 +5862,22 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "domain",
         "parameterName": "body_find_sitemap_urls_domain",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "keywords",
         "parameterName": "body_find_sitemap_urls_keywords",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "exact_match",
         "parameterName": "body_find_sitemap_urls_exact_match",
-        "required": false
+        "required": false,
+        "schemaType": "boolean"
       }
     ]
   },
@@ -5576,7 +5931,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "company_name",
         "parameterName": "body_find_website_by_company_name_company_name",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -5653,31 +6009,36 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "date",
         "parameterName": "body_format_datetime_date",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "format",
         "parameterName": "body_format_datetime_format",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "locale",
         "parameterName": "body_format_datetime_locale",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "new_timezone",
         "parameterName": "body_format_datetime_new_timezone",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "original_timezone",
         "parameterName": "body_format_datetime_original_timezone",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -5736,7 +6097,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "search",
         "parameterName": "body_geo_id_search_search",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -5832,13 +6194,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "max_items",
         "parameterName": "body_google_ad_transparency_scraper_sync_max_items",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "start_url",
         "parameterName": "body_google_ad_transparency_scraper_sync_start_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -5942,19 +6306,22 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "search_string",
         "parameterName": "body_google_maps_places_scraper_sync_search_string",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "location_query",
         "parameterName": "body_google_maps_places_scraper_sync_location_query",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "max_crawled_place_per_search",
         "parameterName": "body_google_maps_places_scraper_sync_max_crawled_place_per_search",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       }
     ]
   },
@@ -6036,13 +6403,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_google_maps_places_scraper_sync_using_url_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "max_crawled_place_per_search",
         "parameterName": "body_google_maps_places_scraper_sync_using_url_max_crawled_place_per_search",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       }
     ]
   },
@@ -6126,19 +6495,22 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "start_url",
         "parameterName": "body_google_maps_reviews_scraper_sync_start_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "max_review",
         "parameterName": "body_google_maps_reviews_scraper_sync_max_review",
-        "required": true
+        "required": true,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "review_sort",
         "parameterName": "body_google_maps_reviews_scraper_sync_review_sort",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -6214,13 +6586,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "query",
         "parameterName": "body_google_search_scraper_sync_query",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "max_pages_per_query",
         "parameterName": "body_google_search_scraper_sync_max_pages_per_query",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       }
     ]
   },
@@ -6288,19 +6662,22 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "geo",
         "parameterName": "body_search_google_trends_geo",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "keyword",
         "parameterName": "body_search_google_trends_keyword",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "timeframe",
         "parameterName": "body_search_google_trends_timeframe",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -6354,7 +6731,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "email",
         "parameterName": "body_identify_email_type_email",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -6416,7 +6794,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "job_id",
         "parameterName": "body_job_status_job_id_string_job_id",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -6470,7 +6849,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_web_json_ld_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -6590,6 +6970,7 @@ export const ENDPOINTS: RichApiEndpoint[] = [
     "defaultQuery": {},
     "defaultBody": {},
     "exampleBody": {
+      "page": 1,
       "size": 10,
       "location": [
         "United States"
@@ -6611,43 +6992,92 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "page",
         "parameterName": "body_lead_search_page",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "size",
         "parameterName": "body_lead_search_size",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "keyword",
         "parameterName": "body_lead_search_keyword",
-        "required": false
+        "required": false,
+        "schemaType": "string"
+      },
+      {
+        "source": "body",
+        "name": "function",
+        "parameterName": "body_lead_search_function",
+        "required": false,
+        "schemaType": "array"
+      },
+      {
+        "source": "body",
+        "name": "industry",
+        "parameterName": "body_lead_search_industry",
+        "required": false,
+        "schemaType": "array"
       },
       {
         "source": "body",
         "name": "lastName",
         "parameterName": "body_lead_search_lastName",
-        "required": false
+        "required": false,
+        "schemaType": "string"
+      },
+      {
+        "source": "body",
+        "name": "location",
+        "parameterName": "body_lead_search_location",
+        "required": false,
+        "schemaType": "array"
       },
       {
         "source": "body",
         "name": "firstName",
         "parameterName": "body_lead_search_firstName",
-        "required": false
+        "required": false,
+        "schemaType": "string"
+      },
+      {
+        "source": "body",
+        "name": "seniority",
+        "parameterName": "body_lead_search_seniority",
+        "required": false,
+        "schemaType": "array"
       },
       {
         "source": "body",
         "name": "sessionId",
         "parameterName": "body_lead_search_sessionId",
-        "required": false
+        "required": false,
+        "schemaType": "string"
+      },
+      {
+        "source": "body",
+        "name": "companySize",
+        "parameterName": "body_lead_search_companySize",
+        "required": false,
+        "schemaType": "array"
       },
       {
         "source": "body",
         "name": "salesNavUrl",
         "parameterName": "body_lead_search_salesNavUrl",
-        "required": false
+        "required": false,
+        "schemaType": "string"
+      },
+      {
+        "source": "body",
+        "name": "currentCompany",
+        "parameterName": "body_lead_search_currentCompany",
+        "required": false,
+        "schemaType": "array"
       }
     ]
   },
@@ -6716,7 +7146,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_ad_details_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -6817,49 +7248,57 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "enddate",
         "parameterName": "body_ad_search_enddate",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "keyword",
         "parameterName": "body_ad_search_keyword",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "countries",
         "parameterName": "body_ad_search_countries",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "searchUrl",
         "parameterName": "body_ad_search_searchUrl",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "startdate",
         "parameterName": "body_ad_search_startdate",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "dateOption",
         "parameterName": "body_ad_search_dateOption",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "accountOwner",
         "parameterName": "body_ad_search_accountOwner",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "paginationToken",
         "parameterName": "body_ad_search_paginationToken",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -6935,13 +7374,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "page",
         "parameterName": "body_linkedin_company_employees_search_page",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "company_linkedin_url",
         "parameterName": "body_linkedin_company_employees_search_company_linkedin_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -7073,43 +7514,50 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "page",
         "parameterName": "body_company_posts_page",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "company",
         "parameterName": "body_company_posts_company",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "companyId",
         "parameterName": "body_company_posts_companyId",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "postedLimit",
         "parameterName": "body_company_posts_postedLimit",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "paginationToken",
         "parameterName": "body_company_posts_paginationToken",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "scrapePostedLimit",
         "parameterName": "body_company_posts_scrapePostedLimit",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "companyUniversalName",
         "parameterName": "body_company_posts_companyUniversalName",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -7243,37 +7691,43 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "page",
         "parameterName": "body_company_search_page",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "geoId",
         "parameterName": "body_company_search_geoId",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "search",
         "parameterName": "body_company_search_search",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "location",
         "parameterName": "body_company_search_location",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "industryId",
         "parameterName": "body_company_search_industryId",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "companySize",
         "parameterName": "body_company_search_companySize",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -7348,13 +7802,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_linkedin_job_detail_url",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "job_id",
         "parameterName": "body_linkedin_job_detail_job_id",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -7445,43 +7901,50 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "page",
         "parameterName": "body_linkedin_job_search_page",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "geoId",
         "parameterName": "body_linkedin_job_search_geoId",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "title",
         "parameterName": "body_linkedin_job_search_title",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "company",
         "parameterName": "body_linkedin_job_search_company",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "jobType",
         "parameterName": "body_linkedin_job_search_jobType",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "location",
         "parameterName": "body_linkedin_job_search_location",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "experienceLevel",
         "parameterName": "body_linkedin_job_search_experienceLevel",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -7605,85 +8068,99 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "page",
         "parameterName": "body_profile_search_page",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "geoId",
         "parameterName": "body_profile_search_geoId",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "title",
         "parameterName": "body_profile_search_title",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "school",
         "parameterName": "body_profile_search_school",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "search",
         "parameterName": "body_profile_search_search",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "lastName",
         "parameterName": "body_profile_search_lastName",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "location",
         "parameterName": "body_profile_search_location",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "firstName",
         "parameterName": "body_profile_search_firstName",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "followerOf",
         "parameterName": "body_profile_search_followerOf",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "industryId",
         "parameterName": "body_profile_search_industryId",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "pastCompany",
         "parameterName": "body_profile_search_pastCompany",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "currentCompany",
         "parameterName": "body_profile_search_currentCompany",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "keywordsSchool",
         "parameterName": "body_profile_search_keywordsSchool",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "keywordsCompany",
         "parameterName": "body_profile_search_keywordsCompany",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -7774,13 +8251,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "start_url",
         "parameterName": "body_meta_ads_library_scraper_sync_start_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "max_results",
         "parameterName": "body_meta_ads_library_scraper_sync_max_results",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       }
     ]
   },
@@ -7854,7 +8333,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_web_meta_tags_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -7907,13 +8387,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "company_name",
         "parameterName": "body_normalize_company_company_name",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "normalize_case",
         "parameterName": "body_normalize_company_normalize_case",
-        "required": false
+        "required": false,
+        "schemaType": "boolean"
       }
     ]
   },
@@ -7967,13 +8449,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "input",
         "parameterName": "body_normalize_list_input",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "remove_empty_values",
         "parameterName": "body_normalize_list_remove_empty_values",
-        "required": false
+        "required": false,
+        "schemaType": "boolean"
       }
     ]
   },
@@ -8042,13 +8526,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "country_code",
         "parameterName": "body_normalize_phone_country_code",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "phone_number",
         "parameterName": "body_normalize_phone_phone_number",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -8239,13 +8725,29 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "page",
         "parameterName": "body_people_search_page",
-        "required": true
+        "required": true,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "size",
         "parameterName": "body_people_search_size",
-        "required": true
+        "required": true,
+        "schemaType": "integer"
+      },
+      {
+        "source": "body",
+        "name": "account",
+        "parameterName": "body_people_search_account",
+        "required": false,
+        "schemaType": "object"
+      },
+      {
+        "source": "body",
+        "name": "contact",
+        "parameterName": "body_people_search_contact",
+        "required": false,
+        "schemaType": "object"
       }
     ]
   },
@@ -8308,25 +8810,29 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "domain",
         "parameterName": "body_phone_finder_domain",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "last_name",
         "parameterName": "body_phone_finder_last_name",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "first_name",
         "parameterName": "body_phone_finder_first_name",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "linkedin_url",
         "parameterName": "body_phone_finder_linkedin_url",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -8427,7 +8933,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "urn",
         "parameterName": "body_post_activities_urn",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -8560,19 +9067,22 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "urn",
         "parameterName": "body_post_details_urn",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "comments",
         "parameterName": "body_post_details_comments",
-        "required": false
+        "required": false,
+        "schemaType": "boolean"
       },
       {
         "source": "body",
         "name": "reactions",
         "parameterName": "body_post_details_reactions",
-        "required": false
+        "required": false,
+        "schemaType": "boolean"
       }
     ]
   },
@@ -8661,19 +9171,22 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "page",
         "parameterName": "body_post_keyword_search_page",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "size",
         "parameterName": "body_post_keyword_search_size",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "keyword",
         "parameterName": "body_post_keyword_search_keyword",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -8727,7 +9240,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "name",
         "parameterName": "body_predict_gender_name",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -8813,13 +9327,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "urn",
         "parameterName": "body_profile_activities_urn",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "type",
         "parameterName": "body_profile_activities_type",
-        "required": false
+        "required": false,
+        "schemaType": "string"
       }
     ]
   },
@@ -8949,13 +9465,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_enrich_profile_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "useCache",
         "parameterName": "body_enrich_profile_useCache",
-        "required": false
+        "required": false,
+        "schemaType": "boolean"
       }
     ]
   },
@@ -9004,7 +9522,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "input_text",
         "parameterName": "body_remove_whitespace_input_text",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -9139,7 +9658,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "domain",
         "parameterName": "body_similarweb_scraper_sync_domain",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -9193,7 +9713,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_web_sitemap_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -9290,25 +9811,29 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "token",
         "parameterName": "body_slack_channel_members_token",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "cookie",
         "parameterName": "body_slack_channel_members_cookie",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "workspace",
         "parameterName": "body_slack_channel_members_workspace",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "channel_id",
         "parameterName": "body_slack_channel_members_channel_id",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -9359,7 +9884,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "seconds",
         "parameterName": "body_sleep_test_seconds",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       }
     ]
   },
@@ -9443,7 +9969,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_web_social_links_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -9502,7 +10029,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_web_tech_stack_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -9576,7 +10104,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_web_pixels_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -9651,13 +10180,22 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_web_scrape_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "cache",
         "parameterName": "body_web_scrape_cache",
-        "required": false
+        "required": false,
+        "schemaType": "boolean"
+      },
+      {
+        "source": "body",
+        "name": "formats",
+        "parameterName": "body_web_scrape_formats",
+        "required": false,
+        "schemaType": "array"
       }
     ]
   },
@@ -9716,13 +10254,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_web_emails_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "max_pages",
         "parameterName": "body_web_emails_max_pages",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       }
     ]
   },
@@ -9806,7 +10346,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_website_intelligence_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -9895,19 +10436,22 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "page",
         "parameterName": "body_directory_yellowpages_page",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       },
       {
         "source": "body",
         "name": "query",
         "parameterName": "body_directory_yellowpages_query",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "location",
         "parameterName": "body_directory_yellowpages_location",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -9991,7 +10535,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_youtube_channel_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   },
@@ -10074,13 +10619,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_youtube_channel_videos_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "max_results",
         "parameterName": "body_youtube_channel_videos_max_results",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       }
     ]
   },
@@ -10163,13 +10710,15 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "query",
         "parameterName": "body_youtube_search_query",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       },
       {
         "source": "body",
         "name": "max_results",
         "parameterName": "body_youtube_search_max_results",
-        "required": false
+        "required": false,
+        "schemaType": "integer"
       }
     ]
   },
@@ -10273,7 +10822,8 @@ export const ENDPOINTS: RichApiEndpoint[] = [
         "source": "body",
         "name": "url",
         "parameterName": "body_youtube_video_url",
-        "required": true
+        "required": true,
+        "schemaType": "string"
       }
     ]
   }

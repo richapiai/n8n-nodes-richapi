@@ -43,6 +43,7 @@ export interface RichApiEndpointField {
 	name: string;
 	parameterName: string;
 	required: boolean;
+	schemaType?: string;
 }
 
 export interface RichApiEndpoint {

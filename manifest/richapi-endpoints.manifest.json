@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "generated_at": "2026-06-16T12:49:19Z",
   "source": "api_endpoint_configs",
-  "base_url": "https://v3-api.texau.com/api/v1",
+  "base_url": "https://api.richapi.ai/api/v1",
   "auth": {
     "type": "api_key",
     "header": "x-api-key"
@@ -161,7 +161,9 @@
       "path_params": [],
       "query_params": [],
       "default_query": {},
-      "default_body": {},
+      "default_body": {
+        "max_tokens":4096
+      },
       "example_body": {
         "prompt": "Summarise this: {{text}}",
         "context": {
@@ -3815,6 +3817,7 @@
       "default_query": {},
       "default_body": {},
       "example_body": {
+        "page":1,
         "size": 10,
         "location": [
           "United States"

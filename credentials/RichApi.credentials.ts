@@ -27,7 +27,7 @@ export class RichApi implements ICredentialType {
 			displayName: 'Base URL',
 			name: 'baseUrl',
 			type: 'string',
-			default: 'https://v3-api.texau.com/api/v1',
+			default: 'https://api.richapi.ai/api/v1',
 			required: true,
 			description: 'Use the production RichAPI base URL unless RichAPI support gives you a staging URL.',
 		},

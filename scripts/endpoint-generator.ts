@@ -177,6 +177,7 @@ function generateParameterFields(
 		name: parameter.name,
 		parameterName: buildParameterName(source, endpoint.name, parameter.name),
 		required: source === 'path' ? true : parameter.required ?? false,
+		schemaType: getSchemaType(parameter.schema),
 	}));
 }
 
@@ -191,11 +192,12 @@ function generateBodyFields(endpoint: RichApiManifestEndpoint): RichApiEndpointF
 
 	return Object.entries(schema.properties)
 		.filter(([, property]) => isSimpleSchema(property))
-		.map(([name]) => ({
+		.map(([name, property]) => ({
 			source: 'body' as const,
 			name,
 			parameterName: buildParameterName('body', endpoint.name, name),
 			required: required.includes(name),
+			schemaType: getSchemaType(property),
 		}));
 }
 
@@ -347,20 +349,29 @@ function getDefaultValue(endpoint: RichApiEndpoint, fieldName: string, schema: S
 	const defaultBodyValue = endpoint.defaultBody[fieldName];
 	const exampleBodyValue = endpoint.exampleBody[fieldName];
 	const candidate = defaultBodyValue ?? schema.default ?? exampleBodyValue;
+	const nodePropertyType = getNodePropertyType(schema);
 
 	if (candidate !== undefined) {
+		if (nodePropertyType === 'json') {
+			return JSON.stringify(candidate, null, 2);
+		}
+
 		return candidate;
 	}
 
-	if (getNodePropertyType(schema) === 'number') {
+	if (nodePropertyType === 'number') {
 		return 0;
 	}
 
-	if (getNodePropertyType(schema) === 'boolean') {
+	if (nodePropertyType === 'boolean') {
 		return false;
 	}
 
-	if (getNodePropertyType(schema) === 'json') {
+	if (nodePropertyType === 'json') {
+		if (getSchemaType(schema) === 'array') {
+			return '[]';
+		}
+
 		return '{}';
 	}
 
@@ -368,7 +379,7 @@ function getDefaultValue(endpoint: RichApiEndpoint, fieldName: string, schema: S
 }
 
 function getNodePropertyType(schema: SchemaProperty): INodeProperties['type'] {
-	const type = Array.isArray(schema.type) ? schema.type[0] : schema.type;
+	const type = getSchemaType(schema);
 
 	if (schema.enum) {
 		return 'options';
@@ -410,9 +421,19 @@ function isSimpleSchema(value: unknown): value is SchemaProperty {
 		return false;
 	}
 
+	const type = getSchemaType(value);
+
+	return Boolean(type);
+}
+
+function getSchemaType(value: unknown): string | undefined {
+	if (!isJsonObject(value)) {
+		return undefined;
+	}
+
 	const type = Array.isArray(value.type) ? value.type[0] : value.type;
 
-	return type !== 'object' && type !== 'array';
+	return typeof type === 'string' ? type : undefined;
 }
 
 function isJsonObject(value: unknown): value is JsonObject {

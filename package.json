@@ -57,8 +57,7 @@
       "dist/credentials/RichApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/RichApi/RichApi.node.js",
-      "dist/nodes/RichApiTrigger/RichApiTrigger.node.js"
+      "dist/nodes/RichApi/RichApi.node.js"
     ]
   }
 }

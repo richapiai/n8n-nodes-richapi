@@ -21,7 +21,7 @@ export class RichApi implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'RichAPI',
 		name: 'richApi',
-		icon: 'file:richapi.svg',
+		icon: 'file:richapi.png',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["endpoint"]}}',
@@ -71,7 +71,7 @@ export class RichApi implements INodeType {
 					{
 						name: 'Deliver to Webhook',
 						value: 'deliverToWebhook',
-						description: 'Send the RichAPI Trigger webhook URL in the request body.',
+						description: 'Send a webhook URL in the request body.',
 					},
 				],
 				default: 'returnJobId',
@@ -88,7 +88,7 @@ export class RichApi implements INodeType {
 				},
 				default: '',
 				required: true,
-				description: 'Use the production URL from a RichAPI Trigger node.',
+				description: 'Webhook URL that RichAPI should call when the async job finishes.',
 			},
 			{
 				displayName: 'Polling Interval Seconds',
